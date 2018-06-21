@@ -14,14 +14,14 @@
 
 <body>
     <?php
-        $cid = $_POST['cid'];
-        $uid = $_POST['uid'];
+        $ques_id = $_POST['ques_id'];
+        $user_id = $_POST['user_id'];
         $date = $_POST['date'];
         $message = $_POST['message'];
             echo
             "<form method='POST' action='".editQuestion($conn)."'>
-                <input type='hidden' name='cid' value='".$cid."'>
-                <input type='hidden' name='uid' value='".$uid."'>
+                <input type='hidden' name='ques_id' value='".$ques_id."'>
+                <input type='hidden' name='user_id' value='".$user_id."'>
                 <input type='hidden' name='date' value='".$date."'>
                 <textarea name='message'>".$message."</textarea><br>
                 <button type='submit' name='Submitquestion'>Submit</button>

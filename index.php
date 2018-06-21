@@ -16,7 +16,7 @@
     <?php
         echo
             "<form method='POST' action='".setQuestion($conn)."'>
-                <input type='hidden' name='uid' value='Anounymous'>
+                <input type='hidden' name='user_id' value='Anounymous'>
                 <input type='hidden' name='date' value='".date('Y-m-d H:i:s')."'>
                 <textarea name='message'></textarea><br>
                 <button type='submit' name='Submitquestion'>Submit Question</button>

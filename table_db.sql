@@ -1,15 +1,13 @@
 CREATE TABLE reply (
-	replyid int not null PRIMARY KEY AUTO_INCREMENT,
-    cid int NOT NULL,
-    uid varchar(128) not null,
+	reply_id int not null PRIMARY KEY AUTO_INCREMENT,
+    ques_id int not null,
+    user_id varchar(128) not null,
     date datetime not null,
     message TEXT not null,
-    FOREIGN KEY (cid) REFERENCES question(cid));
-
-
+    FOREIGN KEY (ques_id) REFERENCES question(ques_id));
 
 CREATE TABLE question ( 
-	cid int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	uid varchar(128) not null,
+	ques_id int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+	user_id varchar(128) not null,
 	date datetime not null,
 	message TEXT NOT NULL );
