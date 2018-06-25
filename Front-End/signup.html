@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="signupstyle.css" />
+	<title> Sign up!</title>
+</head>
+
+<body>
+	<header>
+		<h1> Create a new account </h1>
+	</header>
+
+	<section>
+
+	<form action="">
+		
+
+			<div id="first">
+				<label for="first"> First name: </label>
+				<input type="text" name="first" id="first" size="70" required/>
+			</div>
+			
+
+			<div id="last"> 
+				<label for="last"> Last name: </label>
+			<input type="text" name="last" id="last" required/>
+		</div>
+			
+
+			<div id="email">
+			<label for="email"> Email address: </label>
+			<input type="email" name="email" id="email" required/>
+			</div>
+			
+			<div id="password">
+				
+				<table>
+
+				<tr>
+					<td class="bleh"> </td>
+					<td> <label for="pass1"> Enter a password: </label> </td>
+					<td class="bleh"> </td>
+					<td> <label for="pass2"> Confirm password: </label> </td>
+					<td class="bleh"> </td>
+				</tr>
+
+				<tr>
+					<td class="bleh"> </td>
+					<td> <input type="password" name="pass1" id="pass1" required /> </td>
+					<td class="bleh"> <image src="checkmark.png" alt="checked"  id="ch1" class="invalid"/> <image src="cross.png" alt="wrong" id="cr1" class="invalid" title="Passwords must be at least 8 characters long with at least one uppercase character, one lowercase character, and one number."/>  </td>
+					<td> <input type="password" name="pass2" id="pass2"/ required> </td>
+					<td class="bleh"> <image src="checkmark.png" alt="checked"  id="checkmark" class="invalid"/> <image src="cross.png" alt="wrong" id="cross" class="invalid" title="The passwords do not match"/> </td>
+				</tr>
+			</table>
+
+		</div>
+
+	<script>
+
+		var input1 = document.getElementById("pass1");
+		var input2 = document.getElementById("pass2");
+		var check = document.getElementById("checkmark");
+		var cross= document.getElementById("cross");
+
+		input1.onfocus = function(){
+			document.getElementById("rules").style.display = "block";
+		}
+
+		input1.onkeyup = function(){
+			var lower = /[a-z]/g;
+			var upper = /[A-Z]/g;
+			var nums = /[0-9]/g;
+
+			if(input1.value.length === 0){
+				ch1.classList.remove("valid");
+				cr1.classList.remove("valid");
+				cr1.classList.add("invalid");
+				ch1.classList.add("invalid");
+			}
+
+			else if(input1.value.match(lower) && input1.value.match(upper) && input1.value.match(nums) && (input1.value.length >= 8)){
+				cr1.classList.remove("valid");
+				cr1.classList.add("invalid");
+				ch1.classList.remove("invalid");
+				ch1.classList.add("valid");
+			}
+
+			else{
+				ch1.classList.remove("valid");
+				ch1.classList.add("invalid");
+				cr1.classList.remove("invalid");
+				cr1.classList.add("valid");
+			}
+		}
+
+		input2.onkeyup = function(){
+
+			if(input2.value.length === 0){
+				check.classList.remove("valid");
+				cross.classList.remove("valid");
+				cross.classList.add("invalid");
+				check.classList.add("invalid");
+			}
+			
+			else if(input2.value === input1.value){
+				check.classList.remove("invalid");
+				check.classList.add("valid");
+				cross.classList.remove("valid");
+				cross.classList.add("invalid");
+			}
+			else{
+				cross.classList.remove("invalid");
+				cross.classList.add("valid");
+				check.classList.remove("valid");
+				check.classList.add("invalid");
+
+			}
+		}
+
+	</script>
+		
+		<div id="rules">
+			<h2> Your password needs to have: </h2>
+			<ul>
+				<li> at least 8 characters </li>
+				<li> at least one uppercase letter </li>
+				<li> at least one lowercase letter </li>
+				<li> at least one number </li>
+			</ul>
+		</div>
+
+		<div id="button">
+		<input type="submit" value="Submit" /> 
+</div>
+	</form>
+
+
+</section>
+	
+
+</body>
+
+</html>
