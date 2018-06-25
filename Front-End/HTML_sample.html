@@ -1,0 +1,50 @@
+<!--From editquestions.php-->
+<form method='POST' action='".editQuestion($conn)."'>
+                <input type='hidden' name='ques_id' value='".$ques_id."'>
+                <input type='hidden' name='user_id' value='".$user_id."'>
+                <input type='hidden' name='date' value='".$date."'>
+                <textarea name='message'>".$message."</textarea><br>
+                <button type='submit' name='Submitquestion'>Submit</button>
+            </form>
+			
+			
+			
+			
+<!-- From questions.inc.php-->
+			<div class='comment-box'><p>
+              $row['user_id']."<br>
+                $row['date']."<br>"
+				</p>
+
+            <form class='reply-form' method='POST' action='replyquestions.php'>
+                <input type='hidden' name='ques_id' value='".$row['ques_id']."'>
+                <button id ='".$row['ques_id']."' value='".$row['ques_id']." class = 'reply1' type='submit' name='reply'>Reply</button>
+            </form>  
+        
+            <form class='delete-form' method='POST' action='".deleteQuestion($conn)."'>
+                <input type='hidden' name='ques_id' value='".$row['ques_id']."'>
+                <button type='submit' name='Submitdelete'>Delete</button>
+            </form>         
+        
+             <form class='edit-form' method='POST' action='editquestions.php'>
+                <input type='hidden' name='ques_id' value='".$row['ques_id']."'>
+                <input type='hidden' name='user_id' value='".$row['user_id']."'>
+                <input type='hidden' name='date' value='".$row['date']."'>
+                <input type='hidden' name='message'  value='".$row['message']."'>
+                <button>Edit</button>
+            </form> 
+        </div>
+		
+		
+	<!-- From replyquestions.php-->	
+		<form method='POST' action='".setReply($conn)."'>
+                <input type='hidden' name='user_id' value='Anounymous'>
+                <input type='hidden' name='date' value='".date('Y-m-d H:i:s')."'>
+                <textarea name='message'></textarea><br>
+                <button type='submit' name='Submitreply'>Submit Reply</button>
+            </form>
+		
+		
+		
+		
+		
