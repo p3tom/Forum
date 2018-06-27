@@ -1,0 +1,145 @@
+@font-face
+{
+	font-family: 'GrandHotel';
+	src: url('GrandHotel-Regular2.otf') format('opentype');
+}
+
+body
+{
+	background-color: #333231;
+	text-align: center;
+}
+
+h1
+{
+	color: lime;
+	font-family: 'GrandHotel', Arial, serif;
+}
+
+form
+{
+	color: white;
+	display: flex;
+	flex-direction: column;
+}
+
+section
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#password
+{
+	display: flex;
+	flex-direction: row;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}	
+.pass
+{
+	border: none;
+	padding: 0px;
+
+}
+
+.pass:nth-child(1)
+{
+	min-width: 175px;
+	flex: 1;
+}
+
+
+#pass1
+{
+	position: relative;
+	top: 5px;
+}
+
+#pass2
+{
+	position: relative;
+	top: 5px;
+	
+}
+
+form div
+{
+	margin: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 450px;
+	border: solid white;
+	border-width: 2px;
+	border-radius: 5px;
+	text-align: center;
+}
+
+
+input
+{
+	width: 100px;
+}
+
+#button
+{
+	border: none;
+}
+
+
+.valid
+{	
+
+	position: relative;
+	top: 1px;
+
+}
+
+table
+{
+	position: relative;
+	bottom: 4px;	
+	border-collapse: collapse;
+	width: 450px;
+
+
+}
+
+tr:nth-child(2)
+{
+	height: 32px;
+}
+
+.bleh
+{
+	width: 32px;
+}
+.invalid
+{
+	display: none;
+}
+
+h2
+{
+	color: white;
+	font-family: 'GrandHotel';
+	size: 1.2em;
+	text-align: center;
+}
+
+ul
+{
+	color: white;
+}
+
+
+#rules
+{
+	display: none;
+	padding: 0px;
+}
+
+
+
+
