@@ -36,7 +36,8 @@
         exit("Please try again. ");
       }
       else{
-          password_hash("$pwd", PASSWORD_DEFAULT); #hash password for security
+          $hashed_password = password_hash("$pwd", PASSWORD_DEFAULT); #hash password for security
+          //var_dump($hashed_password); #check if password is hashed
       }
     }
     if (empty($_POST["confirm_password"])) { #makes sure password confirmed
@@ -48,6 +49,7 @@
       echo "Passwords do not match. Please try again.";
     }
     else {
+      $pwd = $hashed_password;
       $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
       $insert_query = "INSERT INTO login SET first_name = '$firstname', last_name = '$lastname', email = '$email', password = '$pwd'";
       $query = mysqli_query($connection, $insert_query);
@@ -65,14 +67,23 @@ function test_input($data) { #cleans up entered data
 
 function checkPassword($password) { #checks if password satisfies conditions
   $errors = array();
-  if(strlen($password) < 8) $errors[] = 'Password is less than 8 characters. ';
-  if(preg_match("/[A-Z]/", $password) === false) $errors[] = 'Password does not contain an uppercase letter. ';
-  if(preg_match("/[a-z]/", $password) === false) $errors[] = 'Password does not contain a lowercase letter. ';
-  if(preg_match("/[0-9]/", $password) === false) $errors[] = 'Password does not contain an uppercase letter. ';
+  if(strlen($password) < 8) {
+    $errors[] = 'Password is less than 8 characters. ';
+  }
+  if(preg_match("/[A-Z]/", $password) === 0){
+     $errors[] = 'Password does not contain an uppercase letter. ';
+  }
+  if(preg_match("/[a-z]/", $password) === 0) {
+      $errors[] = 'Password does not contain a lowercase letter. ';
+  }
+  if(preg_match("/[0-9]/", $password) === 0) {
+      $errors[] = 'Password does not contain a number. ';
+  }
   if(empty($errors) === false){
-    echo '<br />' . implode('.', $errors); #not outputting all the errors
-    return false;
-  } else {
+      echo '<br />' . implode($errors); #not outputting all the errors
+        return false;
+      }
+  else {
     echo "Password is valid. ";
     return true;
   }
