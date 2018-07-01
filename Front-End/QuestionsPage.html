@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="qpagestyle.css"/>
+	<title> All questions </title>
+</head>
+
+<body>
+
+	<section id="main">
+
+		<h2> All questions </h2>
+
+		<fieldset id="newQuestion">
+			
+			<legend>Can't find what you're looking for? Ask a question! </legend>
+			<div id="inner">
+			<input id="title" type="text" placeholder="Title" required /> <br/>
+			<textarea id="q" placeholder="Your question..."> </textarea> <br/>
+			<button id="post"> Post </button>
+			<button id="cancel"> Cancel </button>
+		</div>
+		</fieldset>
+
+		<div id="top">
+			<input type="search" placeholder="Search questions" />
+
+			<label for="sortby">Sort questions by:</label> 
+			<select name="sortby" id="sortby">
+				<option value="date"> Newest </option>
+				<option value="best"> Best </option>
+			</select>
+		</div>
+
+		<div id="questions">
+			<!-- Where all the questions will show -->
+		</div>
+
+		<script src="http://code.jquery.com/jquery.js"> </script>
+		<script> 
+			$( function(){
+				$('#cancel').click(erase);
+
+				function erase () {
+					$('#q').val("");
+					$('#title').val("");
+				}
+
+				$('#post').click(addNew);
+
+				function addNew () {
+					var title = $('#title').val();
+
+					var score = 0;
+					var date = new Date();
+
+					link = $("<a href=''>").html(title);
+					titleDiv = $("<div class='qTitle'>").html(link);
+					infoDiv = $("<div class='info'>");
+					scoreDiv = $("<div class= 'score'>").html("Good question? " + score);
+					//Color of the number will change based on its number.
+					dateDiv = $("<div class= 'date'>").html("Posted " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
+					$(infoDiv).append(scoreDiv).append(dateDiv);
+					$(titleDiv).append(infoDiv);
+
+
+					//If sorted by date, prepend. Otherwise, append.
+					$('#questions').prepend(titleDiv);
+
+					$('#q').val("");
+					$('#title').val("");
+
+				}
+			});
+		</script>
+
+	</section>
+
+</html>
