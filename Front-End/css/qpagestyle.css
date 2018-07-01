@@ -1,0 +1,106 @@
+button
+{
+	width: 80px;
+	position: relative;
+
+}
+
+fieldset{
+	width: 1000px;
+}
+
+h2
+{
+	color: aqua;
+	text-align: center;
+	size: 1.7em;
+}
+
+#inner
+{
+	padding: 15px;
+	padding-bottom: 10px;
+}
+#title
+{
+	width: 960px;
+}
+
+#q{
+	width: 964px;
+	height: 65px;
+	resize: vertical;
+	overflow: auto;
+}
+
+body{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background-color: #333231;
+}
+
+section{
+	display: flex;
+	flex-direction: column;
+	color: white;
+}
+#top
+{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	width: 1025px;
+}
+#top input
+{
+	flex: 2;
+	margin-right: 30px;
+	position: relative;
+	left: 2px;
+}
+
+#top label
+{
+	margin-right: 5px;
+}
+
+#questions
+{
+	width: 1030px;
+}
+
+
+.qTitle
+{
+	border: solid black;
+	border-width: 2px;
+	border-radius: 5px;
+	margin-top: 20px;
+	padding: 10px;
+	background-color:#96f4ff;
+	color: black;
+	display: flex;
+	justify-content: space-between;
+}
+
+.info
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-left: 10px;
+	font-size: 0.8em;
+	width: 125px;
+	position: relative;
+	right: 5px;
+	text-align: right;
+}
+
+
+
+
+
+
+
+
