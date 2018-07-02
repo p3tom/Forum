@@ -1,0 +1,115 @@
+body
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background-color: #333231;
+}
+
+
+#question
+{
+	border: solid black;
+	border-radius: 2px;
+	border-width: 2px;
+	background-color: #bcfff9;
+	width: 1000px;
+	display: flex;
+	flex-direction: column;
+	margin-top: 25px;
+}
+
+#question div{
+	padding: 2px;
+}
+
+#content
+{
+	position: relative;
+	left: 5px;
+}
+
+#buttons
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+#score
+{
+	position: relative;
+	bottom: 5px;
+}
+
+#replyarea
+{
+	width: 1000px;
+	position: relative;
+	top: 75px;
+}
+
+textarea
+{
+	resize: vertical;
+	overflow: auto;
+}
+
+#newreply
+{
+	width: 1000px;
+	height: 70px;
+}
+
+#replies{
+	width: 1000px;
+}
+
+.reply
+{	
+	width: 1000px;
+	border: solid black;
+	border-radius: 5px;
+	background-color:#c6bcff ;
+	margin-top: 15px;
+	padding-left: 5px;
+}
+
+.info
+{
+	display: flex;
+	justify-content: space-between;
+
+}
+
+.info span
+{
+	padding: 3px;
+	padding-left: 0px;
+}
+
+.down
+{
+	position: relative;
+	left: 3px;
+}
+
+.info span
+{
+	position: relative;
+	left: 3px;
+}
+
+.followup
+{
+	width: 850px;
+	border: solid black;
+	border-radius: 5px;
+	background-color:#bcddff ;
+	margin-top: 7px;
+	padding-left: 5px;
+
+}
+/*#bcddff;*/
+
+
+
