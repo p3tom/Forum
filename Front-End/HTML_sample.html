@@ -1,3 +1,10 @@
+<html>
+<head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+    
 <!--From editquestions.php-->
 <form method='POST' action='".editQuestion($conn)."'>
                 <input type='hidden' name='ques_id' value='".$ques_id."'>
@@ -16,10 +23,10 @@
                 $row['date']."<br>"
 				</p>
 
-            <form class='reply-form' method='POST' action='replyquestions.php'>
+            <!--<form class='reply-form' method='POST' action='replyquestions.php'>
                 <input type='hidden' name='ques_id' value='".$row['ques_id']."'>
-                <button id ='".$row['ques_id']."' value='".$row['ques_id']." class = 'reply1' type='submit' name='reply'>Reply</button>
-            </form>  
+                <button id ='".$row['ques_id']."' value='".$row['ques_id']."' class = 'reply1' type='submit' name='reply'>Reply</button>
+            </form>  -->
         
             <form class='delete-form' method='POST' action='".deleteQuestion($conn)."'>
                 <input type='hidden' name='ques_id' value='".$row['ques_id']."'>
@@ -36,15 +43,15 @@
         </div>
 		
 		
-	<!-- From replyquestions.php-->	
+	<!--From replyquestions.php	
 		<form method='POST' action='".setReply($conn)."'>
                 <input type='hidden' name='user_id' value='Anounymous'>
                 <input type='hidden' name='date' value='".date('Y-m-d H:i:s')."'>
                 <textarea name='message'></textarea><br>
                 <button type='submit' name='Submitreply'>Submit Reply</button>
-            </form>
+            </form>-->
 		
-		
-		
+</body>		
+</html>	
 		
 		

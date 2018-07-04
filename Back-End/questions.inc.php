@@ -21,7 +21,7 @@ function getQuestion($conn){
 
             <form class='reply-form' method='POST' action='replyquestions.php'>
                 <input type='hidden' name='ques_id' value='".$row['ques_id']."'>
-                <button id ='".$row['ques_id']."' value='".$row['ques_id']." class = 'reply1' type='submit' name='reply'>Reply</button>
+                <button id ='".$row['ques_id']."' value='".$row['ques_id']."' class = 'reply1' type='submit' name='reply'>Reply</button>
             </form>  
         
             <form class='delete-form' method='POST' action='".deleteQuestion($conn)."'>
@@ -46,33 +46,44 @@ function editQuestion($conn){
         $user_id = $_POST['user_id'];
         $date = $_POST['date'];
         $message = $_POST['message'];
-        $sql = "UPDATE question SET message='$message', date='$date'  WHERE ques_id='$ques_id'";
+        $sql = "UPDATE question SET message='$message', date='$date'  WHERE ques_id='$ques_id";
         $result = mysqli_query($conn, $sql);
-        header("Location: index.php");
+        $json_array = array();
+        while($row = mysqli_fetch_assoc($result)){
+            $json_array[] = $row;
+        }
+            echo json_encode($json_array);
     }
 }
-
 function deleteQuestion($conn){
     if(isset($_POST['Submitdelete'])){
         $ques_id = $_POST['ques_id'];
         $sql = "DELETE FROM question WHERE ques_id='$ques_id'";
-        $result = mysqli_query($conn, $sql);
-        header("Location: index.php");
+                $result = mysqli_query($conn, $sql);
+                $json_array = array();
+                while($row = mysqli_fetch_assoc($result)){
+                    $json_array[] = $row;
+                }
+                    echo json_encode($json_array);
     }
 }
 
-function setReply($conn){
+/*function Reply($conn){
     if(isset($_POST['Submitreply'])){
         $ques_id = $_GET['reply'];
         $user_id = $_POST['user_id'];
         $date = $_POST['date'];
         $message = $_POST['message'];
-        $sql = "INSERT INTO reply(ques_id, user_id, date, message) VALUES('ques_id','$user_id', '$date', '$message')";
-        $result = mysqli_query($conn, $sql);   
-
+        $sql2 = "INSERT INTO reply(ques_id, user_id, date, message) VALUES('ques_id','$user_id', '$date', '$message')";
+                $result2 = mysqli_query($conn, $sql2);
+                $json_array = array();
+                while($row = mysqli_fetch_assoc($result2)){
+                    $json_array[] = $row;
+                }
+                    echo json_encode($json_array);
     }
 }
-/*function getReply($conn){
+function getReply($conn){
     $sql2 = "SELECT * FROM reply";
     $result2 = mysqli_query($conn, $sql2);
     while($row = mysqli_fetch_assoc($result2)){

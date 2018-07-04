@@ -48,6 +48,12 @@ function editQuestion($conn){
         $message = $_POST['message'];
         $sql = "UPDATE question SET message='$message', date='$date'  WHERE ques_id='$ques_id'";
         $result = mysqli_query($conn, $sql);
+        
+        $json_array = array();
+        while($row = mysqli_fetch_assoc($result)){
+            $json_array[] = $row;
+        }
+        echo json_encode($json_array);
         header("Location: index.php");
     }
 }
@@ -57,11 +63,16 @@ function deleteQuestion($conn){
         $ques_id = $_POST['ques_id'];
         $sql = "DELETE FROM question WHERE ques_id='$ques_id'";
         $result = mysqli_query($conn, $sql);
+        $json_array = array();
+        while($row = mysqli_fetch_assoc($result)){
+            $json_array[] = $row;
+        }
+        echo json_encode($json_array);
         header("Location: index.php");
     }
 }
 
-function setReply($conn){
+/*function setReply($conn){
     if(isset($_POST['Submitreply'])){
         $ques_id = $_GET['reply'];
         $user_id = $_POST['user_id'];
@@ -72,7 +83,7 @@ function setReply($conn){
 
     }
 }
-/*function getReply($conn){
+function getReply($conn){
     $sql2 = "SELECT * FROM reply";
     $result2 = mysqli_query($conn, $sql2);
     while($row = mysqli_fetch_assoc($result2)){

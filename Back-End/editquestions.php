@@ -13,11 +13,11 @@
 </head>
 
 <body>
-    <?php
-        $ques_id = $_POST['ques_id'];
-        $user_id = $_POST['user_id'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
+    <?php        
+         ques_id = $_POST['ques_id'];
+         user_id = $_POST['user_id'];
+         date = $_POST['date'];
+         message = $_POST['message'];
             echo
             "<form method='POST' action='".editQuestion($conn)."'>
                 <input type='hidden' name='ques_id' value='".$ques_id."'>
