@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="questionstyle.css" />
+	<title> Question title </title> <!-- Should depend on the title of the question -->
+</head>
+
+<body>
+
+	<section id="main">
+
+		<div id=question>
+			<div id="content">
+				<h2 id="qtitle"> Question title </h2>
+				<p> Content of the question. </p>
+			</div>
+
+			<div id="buttons">
+				<div>
+				<span id="upvote">
+					<image src="green_arrow_mini.png" />
+				</span>
+
+				<span id="downvote">
+					<image src="red_arrow_mini.png" />
+				</span>
+
+
+				<span id="score">
+				</span>
+			</div>
+
+				<div>
+				<button id="edit"> Edit </button>
+				<button id="delete"> Delete </button>
+			</div>
+
+			</div>
+
+		</div>
+
+
+		<div id="replyarea">
+			<div id=#new>
+				<textarea id="newreply" placeholder="Got an answer, suggestion or comment?"> </textarea> <br/>
+				<div> <button id="postnew"> Post </button>
+				<button id="cancelnew"> Cancel </button> </div>
+			</div>
+			<div id="replies">
+			</div>
+
+		</div>
+
+		<script src="http://code.jquery.com/jquery.js"> </script>
+		<script>
+			$(function(){
+
+				var score = 0;
+
+				$('#score').text(score);
+
+				//$('#upvote').click(upScore);
+				$('#upvote').click(function(){
+					score = score + 1;
+					$('#score').text(score);
+				});
+
+				//function upScore (){
+				function upScore(x, area){
+					x = x + 1;
+					$(area).text(x);
+					//score = score + 1;
+					//$('#score').text(score);
+				}
+
+				$('#downvote').click(downScore);
+
+				function downScore(){
+					score = score - 1;
+					$('#score').text(score);
+				}
+
+				$('#cancelnew').click(function(){
+
+					$('#newreply').val("");
+				});
+
+				var child = 0;
+
+				$('#postnew').click(function(){
+					return addNew('reply', '#newreply');
+				});
+				
+
+
+				function addNew (name, area) {
+					
+					text = $(area).val();
+					insert = $("<p>").html(text);
+
+					answerDiv = $("<div>").html(insert);
+
+					answerDiv.addClass(""+name);
+
+					infoDiv= $("<div class='info'>");
+
+					scoreDiv = $("<span class='scorediv'>").text(0);
+
+					edit = $("<button>").html("Edit");
+					del = $("<button>").html("Delete");
+					follow = $("<button class='startfollow'>").html("Post a reply" + child);
+					buttonsDiv = $("<span class = 'ed'>");
+
+					up = $("<image src='green_arrow_mini.png' alt='up' title='upvote'>");
+					down = $("<image src='red_arrow_mini.png' alt='down' title='downvote'/>");
+
+					$(up).addClass('up').addClass("" + child);
+					$(down).addClass('down').addClass("" + child);
+					$(scoreDiv).addClass("" + child);
+					$(answerDiv).addClass("" + child);
+					$(follow).addClass("" + child);
+
+					child++;
+
+					$(buttonsDiv).append(edit).append(del);
+
+
+					$(answerDiv).append(up).append(down).append(scoreDiv).append(buttonsDiv);
+
+					$(area).val("");
+
+					if (name === 'reply'){
+						
+						$('#replies').prepend(answerDiv);
+						$(answerDiv).after(follow);
+						
+					}
+
+
+					else if (name === 'followup'){
+						n = ($(answerDiv).attr('class').split(' ')[1]);
+						n = Number(n - 1);
+						//this is where the problem is: with the counter. Need to find a way to associate the prev and add it onto that.
+						$('.reply.'+n).after(answerDiv);
+					}
+
+
+					//$(up['number'] = child);
+					
+				}
+
+
+				$("body").click(function(event){
+
+					if (event.target.classList.contains("up") === true){
+						index = ($(event.target).attr('class').split(' ')[1]);
+
+						num = Number($('.scorediv.'+index).text());
+						num = Number(num)+1;
+						$('.scorediv.'+index).text(Number(num));
+					}
+
+					else if (event.target.classList.contains("down")===true){
+						newindex = ($(event.target).attr('class').split(' ')[1]);
+
+						num = Number($('.scorediv.'+newindex).text());
+						num = Number(num)-1;
+						$('.scorediv.'+newindex).text(Number(num));
+					}
+
+					else if (event.target.classList.contains("startfollow")===true){
+						i = ($(event.target).attr('class').split(' ')[1]);
+						followbox = $("<textarea class='followbox' placeholder='Type out your follow-up!'>");
+						$('.startfollow.'+i).replaceWith(followbox);
+						p = $("<button>").html("Post" + i);
+						c = $("<button>").html("Cancel" + i);
+						$(followbox).after(p);
+						$(p).after(c);
+
+						$(c).click(function(){
+							$(followbox).remove();
+							$(p).remove();
+							$(c).remove();
+							button = $("<button class='startfollow'>").html("Post a reply" + i);
+							$(button).addClass("" + i);
+
+							// here too 
+							$('.reply.'+i).after(button);
+							//Is there a better way to do this?
+						});
+
+						$(p).click(function(){
+							
+							$(p).remove();
+							$(c).remove();
+							$(followbox).replaceWith(addNew('followup', '.followbox'));
+							//$(followbox).remove();
+							
+							i = Number(i+1);
+							button = $("<button class='startfollow'>").html("Post a reply" + i);
+							$('.followup.'+i).after(button);	
+							$(button).addClass("" + i);
+						});
+
+					}
+
+
+
+				});
+
+
+
+				//For edit, generate a new textarea filled with the contents of the question.
+
+				//Delete will need to go to the database... And send you back to the questions page. First alert: are you sure you want to delete?
+
+
+			});
+
+		</script>
+
+	</section>
+</body>
+
+</html>
