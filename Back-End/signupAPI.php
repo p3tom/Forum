@@ -3,6 +3,7 @@
   $inputArray = [$firstname, $lastname, $email, $pwd, $cpwd];
   $blank_fields = [];
   $is_filled = true;
+  //echo "This is the signupAPI";
   if ($_SERVER["REQUEST_METHOD"] == "POST") { #input user data
     $firstname = clean_data($_POST["first"]);
     $lastname = clean_data($_POST["last"]);
@@ -20,13 +21,15 @@
         } #close if statement
       } #close inner foreach
     } #close outer foreach
-    echo implode(" is required. <br/>", $blank_fields). " is required.";
-    echo '<script> alert(implode($blank_fields)); location.href = "signup.html";</script>';
+    if (!empty($blank_fields)){
+      echo implode(" is required. <br/>", $blank_fields). " is required.";
+      echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
+    }
     //echo '<br />' .implode($blank_fields).  'is required <br />';
     if ($is_filled === true){
       // #check if email in correct format
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script> alert("Invalid email format"); location.href = "signup.html";</script>'; #
+        echo '<script> alert("Invalid email format"); location.href = "../Front-End/signup.html";</script>'; #
         //echo "Invalid email format. Please try again. " ;
         //var_dump(!filter_var($email, FILTER_VALIDATE_EMAIL));
       }#closes if statement checking email format
@@ -37,15 +40,15 @@
         $query = mysqli_query($connection, $select_query);
         if (mysqli_num_rows($query) != 0) { #checks to make sure email not already registered
         //  echo "Email already exists. Please try again. ";
-          echo '<script> alert("Email already exists. Please try again. "); location.href = "signup.html";</script>';
+          echo '<script> alert("Email already exists. Please try again. "); location.href = "../Front-End/signup.html";</script>';
         }#closes if statement checking email
         else{
           #check if password satisfies conditions
-          //checkPassword($pwd);
+          checkPassword($pwd);
           if (checkPassword($pwd) === true){
             #check if confirmation matches password
             if ($pwd != $cpwd) { #compares password and confirmation
-              echo '<script> alert("Passwords do not match. Please try again."); location.href = "signup.html";</script>';
+              echo '<script> alert("Passwords do not match. Please try again."); location.href = "../Front-End/signup.html";</script>';
             //  echo "Passwords do not match. Please try again.";
             }
             else {
@@ -55,7 +58,7 @@
               $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
               $insert_query = "INSERT INTO login SET first_name = '$firstname', last_name = '$lastname', email = '$email', password = '$pwd'";
               $query = mysqli_query($connection, $insert_query);
-              echo '<script> alert("Sign up successful"); location.href = "signup.html";</script>';
+              echo '<script> alert("Sign up successful"); location.href = "../Front-End/signup.html";</script>';
               //echo "Sign up successful";
             }
           } #closes if statement if checkPassword returns true
