@@ -15,7 +15,7 @@
 		<div id=question>
 			<div id="content">
 				<h2 id="qtitle"> Question title </h2>
-				<p> Content of the question. </p>
+				<p id="theQ"> Content of the question. </p>
 			</div>
 
 			<div id="buttons">
@@ -62,26 +62,15 @@
 
 				$('#score').text(score);
 
-				//$('#upvote').click(upScore);
 				$('#upvote').click(function(){
 					score = score + 1;
 					$('#score').text(score);
 				});
 
-				//function upScore (){
-				function upScore(x, area){
-					x = x + 1;
-					$(area).text(x);
-					//score = score + 1;
-					//$('#score').text(score);
-				}
-
-				$('#downvote').click(downScore);
-
-				function downScore(){
+				$('#downvote').click(function() {
 					score = score - 1;
 					$('#score').text(score);
-				}
+				});
 
 				$('#cancelnew').click(function(){
 
@@ -91,64 +80,100 @@
 				var child = 0;
 
 				$('#postnew').click(function(){
-					return addNew('reply', '#newreply');
+					return addNew('reply', '#newreply', 0);
 				});
 				
+				$('#edit').click(function(){
+					q = $('#theQ').html();
+					area = $("<textarea>").html(q);
+					$(area).attr('id', 'editq');
+					$('#theQ').replaceWith(area);
+					u = $("<button>").html("Update");
+					s = $("<button>").html("Cancel");
+					$(area).after(s);
+					$(area).after(u);
+
+					$(u).click(function(){
+						newQ = $(area).val();
+						question = $("<p id='theQ'>").html(newQ);
+						$(area).replaceWith(question);
+
+						$(u).remove();
+						$(s).remove();
+					});
+
+					$(s).click(function(){
+						oldQ = $("<p id='theQ'>").html(q);
+						$(area).replaceWith(oldQ);
+						$(u).remove();
+						$(s).remove();
+					});
+
+				});
 
 
-				function addNew (name, area) {
+				function addNew (name, area, which) {
 					
 					text = $(area).val();
-					insert = $("<p>").html(text);
+					insert = $("<p class='text'>").html(text);
 
 					answerDiv = $("<div>").html(insert);
 
 					answerDiv.addClass(""+name);
 
-					infoDiv= $("<div class='info'>");
-
 					scoreDiv = $("<span class='scorediv'>").text(0);
 
-					edit = $("<button>").html("Edit");
-					del = $("<button>").html("Delete");
-					follow = $("<button class='startfollow'>").html("Post a reply" + child);
+					edit = $("<button class='edit'>").html("Edit");
+					del = $("<button class='delete'>").html("Delete");
+					follow = $("<button class='startfollow'>").html("Post a reply");
 					buttonsDiv = $("<span class = 'ed'>");
+					followDiv = $("<div class='followDiv'>");
+					updownscore = $("<span class ='uds'>");
 
 					up = $("<image src='green_arrow_mini.png' alt='up' title='upvote'>");
-					down = $("<image src='red_arrow_mini.png' alt='down' title='downvote'/>");
+					down = $("<image src='red_arrow_mini.png' alt='down' title='downvote'>");
+
+					infoDiv = $("<div class='infodiv'>");
 
 					$(up).addClass('up').addClass("" + child);
 					$(down).addClass('down').addClass("" + child);
 					$(scoreDiv).addClass("" + child);
 					$(answerDiv).addClass("" + child);
 					$(follow).addClass("" + child);
+					$(edit).addClass(""+ child);
+					$(del).addClass("" + child);
+					$(insert).addClass("" + child);
+					
+					
+					$(followDiv).addClass("" + child);
 
 					child++;
 
 					$(buttonsDiv).append(edit).append(del);
+					
+					$(updownscore).append(up).append(down).append(scoreDiv);
+					$(infoDiv).append(updownscore).append(buttonsDiv);
 
-
-					$(answerDiv).append(up).append(down).append(scoreDiv).append(buttonsDiv);
+					$(answerDiv).append(infoDiv);
 
 					$(area).val("");
 
 					if (name === 'reply'){
 						
 						$('#replies').prepend(answerDiv);
+						$(answerDiv).after(followDiv);
 						$(answerDiv).after(follow);
-						
+						$(del).addClass("r");
 					}
 
 
 					else if (name === 'followup'){
-						n = ($(answerDiv).attr('class').split(' ')[1]);
-						n = Number(n - 1);
-						//this is where the problem is: with the counter. Need to find a way to associate the prev and add it onto that.
-						$('.reply.'+n).after(answerDiv);
+						n = Number(which);
+						$('.followDiv.'+n).append(answerDiv);
+						$(del).addClass("f");
+
 					}
 
-
-					//$(up['number'] = child);
 					
 				}
 
@@ -174,9 +199,9 @@
 					else if (event.target.classList.contains("startfollow")===true){
 						i = ($(event.target).attr('class').split(' ')[1]);
 						followbox = $("<textarea class='followbox' placeholder='Type out your follow-up!'>");
-						$('.startfollow.'+i).replaceWith(followbox);
-						p = $("<button>").html("Post" + i);
-						c = $("<button>").html("Cancel" + i);
+						$('.startfollow.'+i).after(followbox);
+						p = $("<button>").html("Post");
+						c = $("<button>").html("Cancel");
 						$(followbox).after(p);
 						$(p).after(c);
 
@@ -184,45 +209,82 @@
 							$(followbox).remove();
 							$(p).remove();
 							$(c).remove();
-							button = $("<button class='startfollow'>").html("Post a reply" + i);
-							$(button).addClass("" + i);
 
-							// here too 
-							$('.reply.'+i).after(button);
-							//Is there a better way to do this?
 						});
 
 						$(p).click(function(){
 							
 							$(p).remove();
 							$(c).remove();
-							$(followbox).replaceWith(addNew('followup', '.followbox'));
-							//$(followbox).remove();
-							
-							i = Number(i+1);
-							button = $("<button class='startfollow'>").html("Post a reply" + i);
-							$('.followup.'+i).after(button);	
-							$(button).addClass("" + i);
+							$(followbox).replaceWith(addNew('followup', '.followbox', i));
+
 						});
 
 					}
 
+					else if (event.target.classList.contains("edit")===true){
+						ind = ($(event.target).attr('class').split(' ')[1]);
+						text= $('.text.'+ind).html();
+						editText = $("<textarea class='edittext'>").html(text);
+						$('.text.'+ind).replaceWith(editText);
+						postEdit= $("<button>").html("Post");
+						cancelEdit= $("<button>").html("Cancel");
+						$(editText).after(cancelEdit);
+						$(editText).after(postEdit);
 
+						$(postEdit).click(function(){
+							newtext = $(editText).val();
+							insert = $("<p class='text'>").html(newtext);
+							$(insert).addClass("" + ind);
+							$(editText).replaceWith(insert);
+
+							$(postEdit).remove();
+							$(cancelEdit).remove();
+
+						});
+
+						$(cancelEdit).click(function(){
+							textp = $("<p class='text'>").html(text);
+							$(editText).replaceWith(textp);
+							$(textp).addClass("" + ind);
+							$(postEdit).remove();
+							$(cancelEdit).remove();
+						});
+					}
+
+					else if (event.target.classList.contains("delete")===true){
+						index = ($(event.target).attr('class').split(' ')[1]);
+						which = ($(event.target).attr('class').split(' ')[2]);
+						if (which === 'r'){
+						
+							if (!$.trim( $('.followDiv.'+index).html() ).length){
+								$('.reply.'+index).remove();
+								$('.startfollow.'+index).remove();
+							}
+
+							/*
+							I thought that there might be interesting followups to an answer, so it wouldn't
+							be fair for all followups to be deleted if an answer is deleted. 
+							*/
+
+							else{
+								$('.text.'+index).html('[This answer was deleted]');
+							}
+						}
+						else{
+							$('.followup.'+index).remove();
+						}
+
+					}
 
 				});
-
-
-
-				//For edit, generate a new textarea filled with the contents of the question.
-
-				//Delete will need to go to the database... And send you back to the questions page. First alert: are you sure you want to delete?
-
 
 			});
 
 		</script>
 
 	</section>
+
 </body>
 
 </html>
