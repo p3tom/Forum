@@ -41,6 +41,8 @@
 		<script src="http://code.jquery.com/jquery.js"> </script>
 		<script> 
 			$( function(){
+
+
 				$('#cancel').click(erase);
 
 				function erase () {
@@ -53,21 +55,30 @@
 				function addNew () {
 					var title = $('#title').val();
 
+					//Will need to be retrived from the database
 					var score = 0;
+
 					var date = new Date();
+
+					//Will depend on the current logged-in account
+					var username = "user";
 
 					link = $("<a href=''>").html(title);
 					titleDiv = $("<div class='qTitle'>").html(link);
 					infoDiv = $("<div class='info'>");
 					scoreDiv = $("<div class= 'score'>").html("Good question? " + score);
-					//Color of the number will change based on its number.
-					dateDiv = $("<div class= 'date'>").html("Posted " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
+					
+					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
 					$(infoDiv).append(scoreDiv).append(dateDiv);
 					$(titleDiv).append(infoDiv);
 
-
-					//If sorted by date, prepend. Otherwise, append.
-					$('#questions').prepend(titleDiv);
+					var text = $('#sortby option:selected').text();
+					if (text === "Newest"){
+						$('#questions').prepend(titleDiv);
+					}
+					else{
+						$('#questions').append(titleDiv);
+					}
 
 					$('#q').val("");
 					$('#title').val("");
