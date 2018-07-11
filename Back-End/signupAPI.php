@@ -22,7 +22,7 @@
       } #close inner foreach
     } #close outer foreach
     if (!empty($blank_fields)){
-      echo implode(" is required. <br/>", $blank_fields). " is required.";
+      //echo implode(" is required. <br/>", $blank_fields). " is required.";
       echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
     }
     //echo '<br />' .implode($blank_fields).  'is required <br />';
@@ -44,7 +44,7 @@
         }#closes if statement checking email
         else{
           #check if password satisfies conditions
-          checkPassword($pwd);
+          //checkPassword($pwd);
           if (checkPassword($pwd) === true){
             #check if confirmation matches password
             if ($pwd != $cpwd) { #compares password and confirmation

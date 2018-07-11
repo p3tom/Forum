@@ -1,6 +1,6 @@
 <?php
     date_default_timezone_set('Europe/Oslo');
-    include 'dba.inc.php';   
+    include 'dba.inc.php';
     include 'questions.inc.php';
 ?>
 <!DOCTYPE html>
@@ -13,16 +13,18 @@
 </head>
 
 <body>
-    <?php        
+    <?php
          ques_id = $_POST['ques_id'];
          user_id = $_POST['user_id'];
          date = $_POST['date'];
+         #title = $_POST['title'];
          message = $_POST['message'];
             echo
             "<form method='POST' action='".editQuestion($conn)."'>
                 <input type='hidden' name='ques_id' value='".$ques_id."'>
                 <input type='hidden' name='user_id' value='".$user_id."'>
                 <input type='hidden' name='date' value='".$date."'>
+                <input type='hidden' name='title' value='".$title."'>
                 <textarea name='message'>".$message."</textarea><br>
                 <button type='submit' name='Submitquestion'>Submit</button>
             </form>";

@@ -1,11 +1,11 @@
 <?php
-  //session_start();
+  session_start();
   $email = $pwd = '';
   $inputArray = [$email, $pwd];
   $blank_fields = [];
   $is_filled = true;
 
-  //if (isset ($_REQUEST['submit_request'])) {
+  if (isset ($_REQUEST['submit_request'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = clean_data($_POST['email']);
     $pwd = clean_data($_POST['pass']);
@@ -52,8 +52,8 @@
              echo "Invalid password";
             }
             $data = mysqli_fetch_array($query);
-        //    $_SESSION['user_id'] = $data['id'];
-        //    $_SESSION['email'] = $data['email'];
+            $_SESSION['user_id'] = $data['id'];
+            $_SESSION['email'] = $data['email'];
             }
           }
         }
