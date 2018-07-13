@@ -1,0 +1,145 @@
+body
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background-color: #333231;
+}
+
+
+#question
+{
+	border: solid black;
+	border-radius: 2px;
+	border-width: 2px;
+	background-color: #bcfff9;
+	width: 1000px;
+	display: flex;
+	flex-direction: column;
+	margin-top: 25px;
+}
+
+#question div{
+	padding: 2px;
+}
+
+#content
+{
+	position: relative;
+	left: 5px;
+}
+
+#buttons
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+#score
+{
+	position: relative;
+	bottom: 5px;
+}
+
+#replyarea
+{
+	width: 1000px;
+	position: relative;
+	top: 75px;
+}
+
+#editq
+{
+	width: 980px;
+}
+
+textarea
+{
+	resize: vertical;
+	overflow: auto;
+
+	width: 1000px;
+	height: 70px;
+}
+
+
+#replies{
+	width: 1000px;
+	padding-bottom: 25px;
+}
+
+.reply
+{	
+	width: 995px;
+	border: solid black;
+	border-radius: 5px;
+	border-width: 2px;
+	background-color:#c6bcff ;
+	margin-top: 15px;
+	padding-left: 5px;
+}
+
+.up, .down
+{
+	max-height: 20px;
+}
+
+.down
+{
+	position: relative;
+	left: 3px;
+}
+
+.followup
+{
+	width: 950px;
+	border: solid black;
+	border-radius: 5px;
+	border-width: 2px;
+	background-color:#bcddff ;
+	margin-top: 7px;
+	padding-left: 5px;
+
+}
+
+.followDiv
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+.uds
+{
+	display: flex;
+
+}
+
+.infodiv
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.infodiv span
+{
+	padding: 3px;
+	padding-left: 0px;
+}
+
+
+.edittext
+{
+	margin-top: 5px;
+	width: 945px;
+}
+
+.scorediv
+{
+	margin-left: 5px;
+	position: relative;
+	bottom: 5px;
+}
+
+

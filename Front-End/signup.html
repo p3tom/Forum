@@ -15,28 +15,27 @@
 
 	<section>
 
-	<form action="">
-		
+	<form action="../Back-End/signupAPI.php" method = "POST">
 
 			<div id="first">
 				<label for="first"> First name: </label>
 				<input type="text" name="first" id="first" size="70" required/>
 			</div>
-			
 
-			<div id="last"> 
+
+			<div id="last">
 				<label for="last"> Last name: </label>
 			<input type="text" name="last" id="last" required/>
 		</div>
-			
+
 
 			<div id="email">
 			<label for="email"> Email address: </label>
 			<input type="email" name="email" id="email" required/>
 			</div>
-			
+
 			<div id="password">
-				
+
 				<table>
 
 				<tr>
@@ -104,7 +103,7 @@
 				cross.classList.add("invalid");
 				check.classList.add("invalid");
 			}
-			
+
 			else if(input2.value === input1.value){
 				check.classList.remove("invalid");
 				check.classList.add("valid");
@@ -121,7 +120,7 @@
 		}
 
 	</script>
-		
+
 		<div id="rules">
 			<h2> Your password needs to have: </h2>
 			<ul>
@@ -133,13 +132,13 @@
 		</div>
 
 		<div id="button">
-		<input type="submit" value="Submit" /> 
+		<input type="submit" value="Submit" />
 </div>
 	</form>
 
 
 </section>
-	
+
 
 </body>
 

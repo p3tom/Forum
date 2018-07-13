@@ -1,114 +1,111 @@
 <?php
-  $firstnameErr = $lastnameErr = $emailErr = $pwdErr = $cpwdErr = '';
-  $firstname = $lastname = $email = $pwd = $cpwd = '';
-  if (isset ($_REQUEST['submit_request'])) {
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["first_name"])) { #makes sure first name entered
-      $firstnameErr = "First name is required";
-    } else {
-      $firstname = test_input($_POST["first_name"]);
+  $firstname = $lastname = $email = $pwd = $cpwd = ''; #initialize variables
+  $inputArray = [$firstname, $lastname, $email, $pwd, $cpwd];
+  $blank_fields = [];
+  $is_filled = true;
+  //echo "This is the signupAPI";
+  if ($_SERVER["REQUEST_METHOD"] == "POST") { #input user data
+    $firstname = clean_data($_POST["first"]);
+    $lastname = clean_data($_POST["last"]);
+    $email = clean_data($_POST["email"]);
+    $pwd = clean_data($_POST["pass1"]);
+    $cpwd = clean_data($_POST["pass2"]);
+    foreach($inputArray as $row => $postRow){ #make array of inputs
+      foreach($_POST as $postRow => $value){
+        //echo not_filled($value);
+        if (not_filled($value) === true) { #checks if each field is filled
+          //$blank_fields[$postRow] = $postRow . " is required <br />";
+          $blank_fields[$postRow] = $postRow;
+          $is_filled = false;
+          //echo '<br />' .implode($blank_fields);
+        } #close if statement
+      } #close inner foreach
+    } #close outer foreach
+    if (!empty($blank_fields)){
+      echo implode(" is required. <br/>", $blank_fields). " is required.";
+      echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
     }
-    if (empty($_POST["last_name"])) { #makes sure last name entered
-      $lastnameErr = "Last name is required";
-    } else {
-      $lastname = test_input($_POST["last_name"]);
-    }
-    if (empty($_POST["email"])) { #makes sure email entered
-      $emailErr = "Email is required";
-    } else {
-      $email = test_input($_POST["email"]); #makes sure email in form __@___
+    //echo '<br />' .implode($blank_fields).  'is required <br />';
+    if ($is_filled === true){
+      // #check if email in correct format
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $emailErr = "Invalid email format";
-      }
-      $connection = mysqli_connect("localhost", "root", "", "questiondb");
-      $select_query = "SELECT * from login where email = '$email'";
-      $query = mysqli_query($connection, $select_query);
-      if (mysqli_num_rows($query) != 0) { #checks to make sure email not already registered
-        exit("Email already exists. Please try again. ");
-      }
-    }
-    if (empty($_POST["password"])) { #makes sure password entered
-      $pwdErr = "Password is required";
-    } else {
-      $pwd = test_input($_POST["password"]);
-      $pass_status = checkPassword($pwd); #call function to check password conditions
-      if ($pass_status === false) { #password does not meet conditions
-        exit("Please try again. ");
-      }
+        echo '<script> alert("Invalid email format"); location.href = "../Front-End/signup.html";</script>'; #
+        //echo "Invalid email format. Please try again. " ;
+        //var_dump(!filter_var($email, FILTER_VALIDATE_EMAIL));
+      }#closes if statement checking email format
       else{
-          $hashed_password = password_hash("$pwd", PASSWORD_DEFAULT); #hash password for security
-          //var_dump($hashed_password); #check if password is hashed
-      }
-    }
-    if (empty($_POST["confirm_password"])) { #makes sure password confirmed
-      $cpwd = "Password confirmation is required";
-    } else {
-      $cpwd = test_input($_POST["confirm_password"]);
-    }
-    if ($pwd != $cpwd) { #compares password and confirmation
-      echo "Passwords do not match. Please try again.";
+        #check if email already exists
+        $connection = mysqli_connect("localhost", "root", "", "questiondb");
+        $select_query = "SELECT * from login where email = '$email'";
+        $query = mysqli_query($connection, $select_query);
+        if (mysqli_num_rows($query) != 0) { #checks to make sure email not already registered
+        //  echo "Email already exists. Please try again. ";
+          echo '<script> alert("Email already exists. Please try again. "); location.href = "../Front-End/signup.html";</script>';
+        }#closes if statement checking email
+        else{
+          #check if password satisfies conditions
+          checkPassword($pwd);
+          if (checkPassword($pwd) === true){
+            #check if confirmation matches password
+            if ($pwd != $cpwd) { #compares password and confirmation
+              echo '<script> alert("Passwords do not match. Please try again."); location.href = "../Front-End/signup.html";</script>';
+            //  echo "Passwords do not match. Please try again.";
+            }
+            else {
+              $hashed_password = password_hash("$pwd", PASSWORD_DEFAULT); #hash password for security
+              $pwd = $hashed_password;
+
+              $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
+              $insert_query = "INSERT INTO login SET first_name = '$firstname', last_name = '$lastname', email = '$email', password = '$pwd'";
+              $query = mysqli_query($connection, $insert_query);
+              echo '<script> alert("Sign up successful"); location.href = "../Front-End/signup.html";</script>';
+              //echo "Sign up successful";
+            }
+          } #closes if statement if checkPassword returns true
+        } #closes else statement after checking email existence
+      } #closes else statement after checking email format
+  } #closes is_filled if statement
+} #closes $_SERVER["REQUEST_METHOD"] == "POST" if statement
+
+
+  function clean_data($data) { #cleans up entered data
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+
+  function not_filled($input){
+    if (empty($input)) {
+      return true; //input is not filled
     }
     else {
-      $pwd = $hashed_password;
-      $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
-      $insert_query = "INSERT INTO login SET first_name = '$firstname', last_name = '$lastname', email = '$email', password = '$pwd'";
-      $query = mysqli_query($connection, $insert_query);
-      echo "Sign up successful";
+      return false; //input is filled
     }
   }
-  }
 
-function test_input($data) { #cleans up entered data
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
-function checkPassword($password) { #checks if password satisfies conditions
-  $errors = array();
-  if(strlen($password) < 8) {
-    $errors[] = 'Password is less than 8 characters. ';
+  function checkPassword($password) { #checks if password satisfies conditions
+    $errors = array();
+    if(strlen($password) < 8) {
+      $errors[] = 'Password must be at least 8 characters. '; #NEED TO FIGURE OUT HOW TO ALERT THIS
+    }
+    if(preg_match("/[A-Z]/", $password) === 0){
+       $errors[] = 'Password must contain an uppercase letter. ';
+    }
+    if(preg_match("/[a-z]/", $password) === 0) {
+        $errors[] = 'Password must contain a lowercase letter. ';
+    }
+    if(preg_match("/[0-9]/", $password) === 0) {
+        $errors[] = 'Password must contain a number. ';
+    }
+    if(empty($errors) === false){
+        echo '<br />' . implode($errors); #output all errors
+          return false;
+        }
+    else {
+      echo "Password is valid. ";
+      return true;
+    }
   }
-  if(preg_match("/[A-Z]/", $password) === 0){
-     $errors[] = 'Password does not contain an uppercase letter. ';
-  }
-  if(preg_match("/[a-z]/", $password) === 0) {
-      $errors[] = 'Password does not contain a lowercase letter. ';
-  }
-  if(preg_match("/[0-9]/", $password) === 0) {
-      $errors[] = 'Password does not contain a number. ';
-  }
-  if(empty($errors) === false){
-      echo '<br />' . implode($errors); #not outputting all the errors
-        return false;
-      }
-  else {
-    echo "Password is valid. ";
-    return true;
-  }
-}
 
 ?>
-
-<form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method = "POST" >
-  First Name: <input type="text" name="first_name">
-  <span class="error">* <?php echo $firstnameErr;?></span>
-  <br><br>
-  Last Name: <input type="text" name="last_name">
-  <span class="error">* <?php echo $lastnameErr;?></span>
-  <br><br>
-  E-mail:
-  <input type="text" name="email">
-  <span class="error">* <?php echo $emailErr;?></span>
-  <br><br>
-  Password:
-  <input type="password" name="password">
-  <span class="error"><?php echo $pwdErr;?></span>
-  <br><br>
-  Confirm Password:
-  <input type="password" name="confirm_password">
-  <span class="error"><?php echo $cpwdErr;?></span>
-  <br><br>
-  <input type = "submit" name = "submit_request" value = "Sign Up"/>
-</form>
