@@ -19,6 +19,7 @@
          date = $_POST['date'];
          #title = $_POST['title'];
          message = $_POST['message'];
+         setQuestion($conn);
             echo
             "<form method='POST' action='".editQuestion($conn)."'>
                 <input type='hidden' name='ques_id' value='".$ques_id."'>
