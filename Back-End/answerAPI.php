@@ -1,24 +1,7 @@
 <?php
   session_start();
   #Preethi's table code
-  /*
-  $reply_table_query = "CREATE TABLE reply (
-  	replyid int(11) not null AUTO_INCREMENT PRIMARY KEY,
-      id int NOT NULL,
-      user_id varchar(128) not null,
-      post_date datetime not null,
-      message TEXT not null,
-      FOREIGN KEY (id) REFERENCES question(id))
-  )";
 
-
-  $question_table_query = "CREATE TABLE question (
-  	id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  	user_id varchar(128) not null,
-  	post_date datetime not null,
-  	message TEXT NOT NULL,
-  	replyid int NOT NULL )";
-*/
   //if(isset($_POST['Submitreply'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       //reply_id auto incremented primary key
@@ -37,12 +20,7 @@
       $replyData = ['Question ID'=> $ques_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
       //$json_array = array();
       $json = json_encode($replyData);
-          echo $json;
-      //while($row = mysqli_fetch_array($query)){
-        //$json_array[] = $row;
-      //}
-      //echo json_encode($json_array);
-  //    mysqli_close($connection);
+        echo $json;
     }
   //}
 
