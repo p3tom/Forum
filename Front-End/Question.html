@@ -34,6 +34,7 @@
 			</div>
 
 				<div>
+				<button id="replybutton"> Reply </button>
 				<button id="edit"> Edit </button>
 				<button id="delete"> Delete </button>
 			</div>
@@ -45,7 +46,7 @@
 
 		<div id="replyarea">
 			<div id=#new>
-				<textarea id="newreply" placeholder="Got an answer, suggestion or comment?"> </textarea> <br/>
+				<textarea id="newreply" placeholder="Got an answer, suggestion or comment?"></textarea> <br/>
 				<div> <button id="postnew"> Post </button>
 				<button id="cancelnew"> Cancel </button> </div>
 			</div>
@@ -75,6 +76,10 @@
 				$('#cancelnew').click(function(){
 
 					$('#newreply').val("");
+				});
+
+				$('#replybutton').click(function(){
+					$('#replyarea').css('display', 'block');
 				});
 
 				var child = 0;
@@ -158,6 +163,11 @@
 
 					$(area).val("");
 
+					var date = new Date();
+					var username = "user";
+					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " at " + date.toLocaleTimeString());
+					$(answerDiv).prepend(dateDiv);
+
 					if (name === 'reply'){
 						
 						$('#replies').prepend(answerDiv);
@@ -173,7 +183,6 @@
 						$(del).addClass("f");
 
 					}
-
 					
 				}
 
