@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2018 at 03:45 PM
+-- Generation Time: Jul 19, 2018 at 04:14 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -99,18 +99,19 @@ CREATE TABLE `question` (
   `ques_id` int(11) NOT NULL,
   `user_id` varchar(128) NOT NULL,
   `date` datetime NOT NULL,
-  `message` text NOT NULL
+  `message` text NOT NULL,
+  `title` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
 --
 
-INSERT INTO `question` (`ques_id`, `user_id`, `date`, `message`) VALUES
-(2, 'Anounymous', '2018-06-20 17:37:37', 'What is HTML? '),
-(3, 'Anounymous', '2018-06-20 17:38:05', 'What is CSS?'),
-(4, 'Anounymous', '2018-07-03 21:54:19', 'What is Jquery?'),
-(5, 'Anounymous', '2018-07-03 21:58:28', 'What is PHP?');
+INSERT INTO `question` (`ques_id`, `user_id`, `date`, `message`, `title`) VALUES
+(2, 'Anounymous', '2018-06-20 17:37:37', 'What is HTML? ', ''),
+(3, 'Anounymous', '2018-06-20 17:38:05', 'What is CSS?', ''),
+(4, 'Anounymous', '2018-07-03 21:54:19', 'What is Jquery?', ''),
+(5, 'Anounymous', '2018-07-03 21:58:28', 'What is PHP?', '');
 
 --
 -- Indexes for dumped tables
