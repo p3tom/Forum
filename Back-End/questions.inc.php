@@ -43,7 +43,7 @@ function getQuestion($conn){
 }
 
 function editQuestion($conn){
-    if(isset($_POST['Submitquestion'])){
+    if(isset($_POST['Submitedit'])){
         $ques_id = $_POST['ques_id'];
         $user_id = $_POST['user_id'];
         $date = $_POST['date'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2018 at 04:14 PM
+-- Generation Time: Jul 20, 2018 at 01:38 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -66,7 +66,7 @@ CREATE TABLE `followup` (
 --
 
 CREATE TABLE `login` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `login` (
 -- Dumping data for table `login`
 --
 
-INSERT INTO `login` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
+INSERT INTO `login` (`user_id`, `first_name`, `last_name`, `email`, `password`) VALUES
 (24, 'John', 'Watson', 'armydoctor@gmail.com', '$2y$10$AW8Sa3jakg6a4Z3v0hJkx.2TmCQ4tEKmDbWxCmBJtWe5ElS6gSgE.'),
 (25, 'Sherlock', 'Holmes', 'baskerville@gmail.com', '$2y$10$5O57Wa3zLGBpsMzH/GltPOeOoK0ZqObBk6a1B72PL8VJ/lUXooZ7i'),
 (68, 'Hercule', 'Poirot', 'belgiandetective@perfection.com', '$2y$10$CgzBLPmoB6YJQC6DzFAVaeCtTl7g.i8vKeAIbyNqeMO/Vy3fLvSrS'),
@@ -87,7 +87,10 @@ INSERT INTO `login` (`id`, `first_name`, `last_name`, `email`, `password`) VALUE
 (85, 'First', 'Last', 'test2@email.com', '$2y$10$cxw/pOOkv2CYKhmuu68Mb.j6V.cKUl9Kb5ylbLW11O1bTq3J4X96O'),
 (86, 'First', 'Last', 'test3@email.com', '$2y$10$U5FbXTMoBLngUBgRUi3/IO04impI8yfXMhUNDah2zKuKWbyjv8Gou'),
 (87, 'First', 'Last', 'test4@email.com', '$2y$10$fDkbdj1XboWXbOmyge6PvOGPMJdZbLXoQqpEOS2UlXr96SvjwxK.O'),
-(88, 'First', 'Last', 'test5@email.com', '$2y$10$NDSEXx/jeCZ2QAqKQZ.S/ebgDwI1dpyESjWVojOpXHRY/hGVYbZHK');
+(88, 'First', 'Last', 'test5@email.com', '$2y$10$NDSEXx/jeCZ2QAqKQZ.S/ebgDwI1dpyESjWVojOpXHRY/hGVYbZHK'),
+(89, 'First', 'Last', 'test10@email.com', '$2y$10$06vvUw.6TYggQdqPaE.1JOyJaljTQP9gzqGefQscTD2Rbxt//v16q'),
+(90, 'First', 'Last', 'test25@email.com', '$2y$10$e3DJCIX48x5qVfyeh7W8kOarKc3Zy7oOigic.hqep8kKwTrBClnMW'),
+(91, 'First', 'Last', 'uhhyhyhyg@email.com', '$2y$10$MNdxA1Jm8TprC5KaIeqCTegR/0GTSWhBseO2pEQSY6poLoP.au6De');
 
 -- --------------------------------------------------------
 
@@ -135,7 +138,7 @@ ALTER TABLE `followup`
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Indexes for table `question`
@@ -157,7 +160,7 @@ ALTER TABLE `followup`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `question`
