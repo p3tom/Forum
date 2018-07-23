@@ -60,6 +60,15 @@
               $query = mysqli_query($connection, $insert_query);
               echo '<script> alert("Sign up successful"); location.href = "../Front-End/signup.html";</script>';
               //echo "Sign up successful";
+              /*
+              $first = $row['first_name'];
+              $last = $row['last_name'];
+              $email = $row['email'];
+              $hash = $row['password'];
+              $userData = ['First Name'=>$first, 'Last Name'=>$last, 'Email'=>$email, 'Password'=>$hash];
+              $json = json_encode($userData);
+              echo $json;
+*/
             }
           } #closes if statement if checkPassword returns true
         } #closes else statement after checking email existence
