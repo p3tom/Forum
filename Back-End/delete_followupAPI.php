@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-    if(isset($_POST['followupdelete'])){
+  //  if(isset($_POST['followupdelete'])){
         $connection = mysqli_connect('localhost', 'root', '', 'questiondb');
             if(!$connection){
                 die("Connection failed:".mysqli_connect_error());
@@ -14,4 +14,4 @@ session_start();
                     $json_array[] = $row;
                 }
                     echo json_encode($json_array);
-    }
+    //}

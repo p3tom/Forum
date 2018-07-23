@@ -1,7 +1,7 @@
 <?php
  session_start();
 
-    if(isset($_POST['commentreply'])){
+    //if(isset($_POST['commentreply'])){
             $connection = mysqli_connect('localhost', 'root', '', 'questiondb');
             if(!$connection){
                 die("Connection failed:".mysqli_connect_error());
@@ -13,5 +13,4 @@
                     $json_array[] = $row;
                 }
                 echo json_encode($json_array);
-    }
-    
+  //  }
