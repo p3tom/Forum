@@ -14,4 +14,8 @@
     $json_array[] = $row;
     }
     echo json_encode($json_array);
+    $question_Data = ['Question ID'=>$ques_id, 'Date'=>$date, 'Message'=> $message];
+    $json = json_encode($question_Data);
+    echo $json;
+
   //}

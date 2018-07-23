@@ -1,7 +1,7 @@
 <?php
  session_start();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+        
         $connection = mysqli_connect('localhost', 'root', '', 'questiondb');
         if(!$connection){
             die("Connection failed:".mysqli_connect_error());

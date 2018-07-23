@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2018 at 01:38 PM
+-- Generation Time: Jul 23, 2018 at 05:28 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -111,10 +111,10 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`ques_id`, `user_id`, `date`, `message`, `title`) VALUES
-(2, 'Anounymous', '2018-06-20 17:37:37', 'What is HTML? ', ''),
-(3, 'Anounymous', '2018-06-20 17:38:05', 'What is CSS?', ''),
-(4, 'Anounymous', '2018-07-03 21:54:19', 'What is Jquery?', ''),
-(5, 'Anounymous', '2018-07-03 21:58:28', 'What is PHP?', '');
+(1, '1', '2018-06-20 17:37:37', 'What is HTML?', 'HTML'),
+(2, '2', '2018-06-20 17:38:05', 'What is CSS?', 'css'),
+(3, '3', '2018-07-03 21:54:19', 'What is Jquery?', 'Jquery'),
+(4, '4', '2018-07-03 21:58:28', 'What is PHP?', 'php');
 
 --
 -- Indexes for dumped tables
@@ -166,7 +166,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
