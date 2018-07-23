@@ -6,8 +6,8 @@
     $date = time(); 
     $message = $_POST['message'];
     $connection = mysqli_connect("localhost", "root", "", "questiondb"); 
-    $update_query = "UPDATE answer SET message='$message', post_date='$date'  WHERE answer_id='$answer_id'";
-    $result = mysqli_query($connection, $update_query);
+    $update_answerquery = "UPDATE answer SET message='$message', post_date='$date'  WHERE answer_id='$answer_id'";
+    $result = mysqli_query($connection, $update_answerquery);
     $json_array = array();
     while($row = mysqli_fetch_assoc($result)){
     $json_array[] = $row;

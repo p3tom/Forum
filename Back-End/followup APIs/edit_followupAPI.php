@@ -1,14 +1,15 @@
 <?php
   session_start();
-  if(isset($_POST['editquestion'])) {
+  if(isset($_POST['followupedit'])) {
 
-    $ques_id = $_POST['ques_id']; 
+    $followup_id = $_POST['followup_id']; 
+    $answer_id = $_POST['answer_id'];
     $user_id = $_SESSION['email']; 
     $date = time(); 
     $message = $_POST['message'];
     $connection = mysqli_connect("localhost", "root", "", "questiondb"); 
-    $update_query = "UPDATE question SET message='$message', post_date='$date'  WHERE ques_id='$ques_id'";
-    $result = mysqli_query($connection, $update_query);
+    $update_followupquery = "UPDATE followup SET message='$message', post_date='$date'  WHERE followup_id='$followup_id'";
+    $result = mysqli_query($connection, $update_followupquery);
     $json_array = array();
     while($row = mysqli_fetch_assoc($result)){
     $json_array[] = $row;
