@@ -2,7 +2,7 @@
  session_start();
 
     //if(isset($_POST['commentreply'])){
-    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+   // if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $connection = mysqli_connect('localhost', 'root', '', 'questiondb');
             if(!$connection){
                 die("Connection failed:".mysqli_connect_error());
@@ -14,6 +14,6 @@
                     $json_array[] = $row;
                 }
                 echo json_encode($json_array);
-        }
+      //  }
   //  }
 ?>

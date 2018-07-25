@@ -8,9 +8,6 @@
     $date = time();
     $message = $_POST['message'];
     $connection = mysqli_connect("localhost", "root", "", "questiondb");
-    $update_query = "UPDATE followup SET message='$message', post_date='$date'  WHERE followup_id='$followup_id'";
-    $result = mysqli_query($connection, $update_query);
-    $connection = mysqli_connect("localhost", "root", "", "questiondb");
     $update_followupquery = "UPDATE followup SET message='$message', post_date='$date'  WHERE followup_id='$followup_id'";
     $result = mysqli_query($connection, $update_followupquery);
     $json_array = array();
