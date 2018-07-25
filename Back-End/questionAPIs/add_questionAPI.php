@@ -15,8 +15,9 @@
       else{
         $insert_query = "INSERT INTO question SET user_id = '$user_id', post_date = '$date', message = '$message', title = '$title'"; #insert the data to database
         $query = mysqli_query($connection, $insert_query);
-        $question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
+        //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
         //$question_Data = ['Question ID'=> $ques_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
+
         $question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
         $json = json_encode($question_Data);
         echo $json;

@@ -7,15 +7,24 @@
     $date = time();
     $message = $_POST['message'];
     $connection = mysqli_connect("localhost", "root", "", "questiondb");
-    $update_quesquery = "UPDATE question SET message='$message', post_date='$date'  WHERE ques_id= '$ques_id'";
-    $result = mysqli_query($connection, $update_quesquery);
-    $json_array = array();
-    while($row = mysqli_fetch_assoc($result)){
-      $json_array[] = $row;
+    if(!$connection){
+        die("Connection failed:".mysqli_connect_error());
     }
-    echo json_encode($json_array);
-    $question_Data = ['Question ID'=>$ques_id, 'Date'=>$date, 'Message'=> $message];
-    $json = json_encode($question_Data);
-    echo $json;
+    else{
+      //var_dump($connection);
+      $update_quesquery = "UPDATE question SET message='$message', post_date='$date'  WHERE ques_id= '$ques_id'";
+      $result = mysqli_query($connection, $update_quesquery);
 
+      $update_quesquery1 =  "SELECT * from question where ques_id = '$ques_id'";
+      $result1 = mysqli_query($connection, $update_quesquery1);
+      $json_array = array();
+      //print_r($result1) ;
+      while($row = mysqli_fetch_assoc($result1)){
+        $json_array[] = $row;
+      }
+      echo json_encode($json_array);
+      $question_Data = ['Question ID'=>$ques_id, 'Date'=>$date, 'Message'=> $message];
+      $json = json_encode($question_Data);
+    //  echo $json;
+    }
   //}
