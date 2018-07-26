@@ -20,6 +20,7 @@
             //$blank_fields[$postRow] = $postRow . " is required <br />";
             $blank_fields[$postRow] = $postRow;
             $is_filled = false;
+            echo '0';
             //echo '<br />' .implode($blank_fields);
           } #close if statement
         } #close inner foreach
@@ -41,7 +42,7 @@
 
           $question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
           $json = json_encode($question_Data);
-          echo $json;
+          echo $json = '1';
         }
       }
   //  }
