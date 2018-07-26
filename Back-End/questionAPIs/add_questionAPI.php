@@ -13,6 +13,7 @@
       $date = date('Y-m-d H:i:s', time());  #timestamp
       $message = $_POST['message'];
       $title = $_POST['title'];
+
       foreach($inputArray as $row => $postRow){ #make array of inputs
         foreach($_POST as $postRow => $value){
           //echo not_filled($value);
@@ -25,10 +26,12 @@
           } #close if statement
         } #close inner foreach
       } #close outer foreach
+
       if (!empty($blank_fields)){
         echo implode(" is required. <br/>", $blank_fields). " is required.";
         //echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
       }
+      
       if ($is_filled === true ) {
         $connection = mysqli_connect("localhost", "root", "", "questiondb"); #to connect database
         if(!$connection){
@@ -42,6 +45,7 @@
 
           //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
           //$json = json_encode($question_Data);
+          // echo $json;
           echo $json = '1';
         }
       }
