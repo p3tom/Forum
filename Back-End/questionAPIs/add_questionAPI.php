@@ -10,7 +10,7 @@
       $is_filled = true;
       $user_id = $_POST['user_id'];
       //$date = date('d-M-Y H:i:s', time());  #timestamp
-      $date = time();  #timestamp
+      $date = date('Y-m-d H:i:s', time());  #timestamp
       $message = $_POST['message'];
       $title = $_POST['title'];
       foreach($inputArray as $row => $postRow){ #make array of inputs
@@ -26,7 +26,7 @@
       } #close outer foreach
       if (!empty($blank_fields)){
         echo implode(" is required. <br/>", $blank_fields). " is required.";
-        echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
+        //echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
       }
       if ($is_filled === true ) {
         $connection = mysqli_connect("localhost", "root", "", "questiondb"); #to connect database

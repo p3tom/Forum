@@ -22,7 +22,7 @@
     } #close outer foreach
     if (!empty($blank_fields)){
       echo implode(" is required. <br/>", $blank_fields). " is required.";
-      echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
+    //  echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
     }
     if ($is_filled === true ) {
       $connection = mysqli_connect("localhost", "root", "", "questiondb");
