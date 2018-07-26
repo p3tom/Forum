@@ -40,8 +40,8 @@
           //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
           //$question_Data = ['Question ID'=> $ques_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
 
-          $question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
-          $json = json_encode($question_Data);
+          //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
+          //$json = json_encode($question_Data);
           echo $json = '1';
         }
       }

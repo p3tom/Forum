@@ -7,11 +7,19 @@ session_start();
                 die("Connection failed:".mysqli_connect_error());
             }
             $followup_id = $_POST['followup_id'];
-            $sql = "DELETE FROM followup WHERE followup_id='$followup_id'";
-                $result = mysqli_query($connection, $sql);
-                $json_array = array();
-                while($row = mysqli_fetch_assoc($result)){
-                    $json_array[] = $row;
-                }
-                    echo json_encode($json_array);
-    //}
+            if (empty($followup_id)) {
+              echo "Follow-up ID is required. <br/>";
+              echo '0 <br/>';
+            }
+            else{
+            $followup_id = $_POST['followup_id'];
+            $delete_query = "DELETE FROM followup WHERE followup_id='$followup_id'";
+            $result = mysqli_query($connection, $delete_query);
+            $delete_query1 =  "SELECT * from followup where followup_id = '$followup_id'";
+            $result1 = mysqli_query($connection, $delete_query1);
+            if (mysqli_num_rows($result1) == 0) { #make sure question has been deleted
+              //echo "Answer deleted <br/>";
+              echo $json = '1';
+              }
+            }
+//}
