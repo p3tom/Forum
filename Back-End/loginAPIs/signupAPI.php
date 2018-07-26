@@ -1,4 +1,5 @@
 <?php
+  session_start();
   $firstname = $lastname = $email = $pwd = $cpwd = ''; #initialize variables
   $inputArray = [$firstname, $lastname, $email, $pwd, $cpwd];
   $blank_fields = [];
@@ -58,17 +59,23 @@
               $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
               $insert_query = "INSERT INTO login SET first_name = '$firstname', last_name = '$lastname', email = '$email', password = '$pwd'";
               $query = mysqli_query($connection, $insert_query);
-              echo '<script> alert("Sign up successful"); location.href = "../Front-End/signup.html";</script>';
-              //echo "Sign up successful";
-              /*
-              $first = $row['first_name'];
-              $last = $row['last_name'];
-              $email = $row['email'];
-              $hash = $row['password'];
-              $userData = ['First Name'=>$first, 'Last Name'=>$last, 'Email'=>$email, 'Password'=>$hash];
-              $json = json_encode($userData);
-              echo $json;
-*/
+
+              $select_query = "SELECT * from login where email = '$email'"; #check if sign up has been successful
+              $query = mysqli_query($connection, $select_query);
+              if (mysqli_num_rows($query) == 0) {
+                echo "Sign up unsuccessful";
+                echo '<script> alert("Sign up unsuccessful"); location.href = "../Front-End/signup.html";</script>'; #
+              }
+              else {
+                $select_id = "SELECT user_id from login where email = '$email'";
+                $id_query = mysqli_query($connection, $select_id);
+                $row = mysqli_fetch_array($id_query, MYSQLI_ASSOC);
+                $id = $row['user_id'];
+                $_SESSION['user_id'] = $id; #save user_id as global variable
+                //echo $_SESSION['user_id'];
+                echo '<script> alert("Sign up successful"); location.href = "../../Front-End/QuestionsPage.html";</script>';
+                }
+
             }
           } #closes if statement if checkPassword returns true
         } #closes else statement after checking email existence

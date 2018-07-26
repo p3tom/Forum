@@ -1,5 +1,5 @@
 <?php
-  //session_start();
+  session_start();
   $email = $pwd = '';
   $inputArray = [$email, $pwd];
   $blank_fields = [];
@@ -51,9 +51,13 @@
             } else {
              echo "Invalid password";
             }
-            //$data = mysqli_fetch_array($query);
-          //  $_SESSION['logged_in'] = true;
-            //$_SESSION['user_id'] = $data['email'];
+            $select_id = "SELECT user_id from login where email = '$email'";
+            $id_query = mysqli_query($connection, $select_id);
+            $row = mysqli_fetch_array($id_query, MYSQLI_ASSOC);
+            $id = $row['user_id'];
+            $_SESSION['user_id'] = $id; #save user_id as global variable
+            echo $_SESSION['user_id'];
+            echo '<script> alert("Log in successful"); location.href = "../../Front-End/QuestionsPage.html";</script>';
             }
           }
         }

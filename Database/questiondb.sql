@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2018 at 05:09 AM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.2.6
+-- Generation Time: Jul 26, 2018 at 01:47 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,6 +31,20 @@ SET time_zone = "+00:00";
 CREATE TABLE `answer` (
   `answer_id` int(11) NOT NULL,
   `ques_id` int(11) DEFAULT NULL,
+  `user_id` varchar(128) NOT NULL,
+  `date` datetime NOT NULL,
+  `message` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `followup`
+--
+
+CREATE TABLE `followup` (
+  `followup_id` int(11) NOT NULL,
+  `answer_id` int(11) DEFAULT NULL,
   `user_id` varchar(128) NOT NULL,
   `date` datetime NOT NULL,
   `message` text NOT NULL
@@ -113,6 +127,13 @@ ALTER TABLE `answer`
   ADD KEY `ques_id` (`ques_id`);
 
 --
+-- Indexes for table `followup`
+--
+ALTER TABLE `followup`
+  ADD PRIMARY KEY (`followup_id`),
+  ADD KEY `answer_id` (`answer_id`);
+
+--
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
@@ -127,6 +148,12 @@ ALTER TABLE `question`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `followup`
+--
+ALTER TABLE `followup`
+  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -149,6 +176,12 @@ ALTER TABLE `question`
 --
 ALTER TABLE `answer`
   ADD CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`ques_id`) REFERENCES `question` (`ques_id`);
+
+--
+-- Constraints for table `followup`
+--
+ALTER TABLE `followup`
+  ADD CONSTRAINT `followup_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`answer_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

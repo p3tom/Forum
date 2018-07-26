@@ -14,7 +14,7 @@
 		<h2> All questions </h2>
 
 		<fieldset id="newQuestion">
-			
+
 			<legend>Can't find what you're looking for? Ask a question! </legend>
 			<div id="inner">
 			<input id="title" type="text" placeholder="Title" required /> <br/>
@@ -27,7 +27,7 @@
 		<div id="top">
 			<input type="search" placeholder="Search questions" />
 
-			<label for="sortby">Sort questions by:</label> 
+			<label for="sortby">Sort questions by:</label>
 			<select name="sortby" id="sortby">
 				<option value="date"> Newest </option>
 				<option value="best"> Best </option>
@@ -39,7 +39,7 @@
 		</div>
 
 		<script src="http://code.jquery.com/jquery.js"> </script>
-		<script> 
+		<script>
 			$( function(){
 
 
@@ -67,7 +67,7 @@
 					titleDiv = $("<div class='qTitle'>").html(link);
 					infoDiv = $("<div class='info'>");
 					scoreDiv = $("<div class= 'score'>").html("Good question? " + score);
-					
+
 					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
 					$(infoDiv).append(scoreDiv).append(dateDiv);
 					$(titleDiv).append(infoDiv);
