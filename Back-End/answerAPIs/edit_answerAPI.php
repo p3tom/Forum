@@ -5,7 +5,7 @@
     $inputArray = [$answer_id, $message];
     $blank_fields = [];
     $is_filled = true;
-    
+
     $answer_id = $_POST['answer_id'];
     //$user_id = $_SESSION['email'];
     $date = time();
@@ -34,6 +34,9 @@
       else{
         $update_answerquery = "UPDATE answer SET message='$message', post_date='$date'  WHERE answer_id='$answer_id'";
         $result = mysqli_query($connection, $update_answerquery);
+        $update_answerquery1 =  "SELECT * from answer where answer_id = '$answer_id' AND message = '$message'";
+        $result1 = mysqli_query($connection, $update_answerquery1);
+        /*
         $json_array = array();
         while($row = mysqli_fetch_assoc($result)){
         $json_array[] = $row;
@@ -42,7 +45,10 @@
           $answer_Data = ['answer ID'=>$answer_id, 'Date'=>$date, 'Message'=> $message];
           $json = json_encode($answer_Data);
         //  echo $json;
+        */
+        if (mysqli_num_rows($result1) == 1) { #make sure question has been edited
           echo $json = '1';
+          }
       }
     }
 
@@ -55,4 +61,3 @@
       return false; //input is filled
     }
   }
-
