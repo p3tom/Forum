@@ -34,6 +34,7 @@
 			</div>
 
 				<div>
+				<button id="replybutton"> Reply </button>
 				<button id="edit"> Edit </button>
 				<button id="delete"> Delete </button>
 			</div>
@@ -45,8 +46,8 @@
 
 		<div id="replyarea">
 			<div id=#new>
-				<textarea id="newreply" placeholder="Got an answer, suggestion or comment?"> </textarea> <br/>
-				<div> <button id="postnew"> Post </button>
+				<textarea id="newreply" placeholder="Got an answer, suggestion or comment?"></textarea> <br/>
+				<div> <button id="postnew" name="commentreply"> Post </button>
 				<button id="cancelnew"> Cancel </button> </div>
 			</div>
 			<div id="replies">
@@ -75,6 +76,10 @@
 				$('#cancelnew').click(function(){
 
 					$('#newreply').val("");
+				});
+
+				$('#replybutton').click(function(){
+					$('#replyarea').css('display', 'block');
 				});
 
 				var child = 0;
@@ -125,7 +130,7 @@
 
 					edit = $("<button class='edit'>").html("Edit");
 					del = $("<button class='delete'>").html("Delete");
-					follow = $("<button class='startfollow'>").html("Post a reply");
+					follow = $("<button class='startfollow' name='commentreply'>").html("Post a reply");
 					buttonsDiv = $("<span class = 'ed'>");
 					followDiv = $("<div class='followDiv'>");
 					updownscore = $("<span class ='uds'>");
@@ -158,8 +163,16 @@
 
 					$(area).val("");
 
+					var date = new Date();
+					var username = "user";
+					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " at " + date.toLocaleTimeString());
+					$(answerDiv).prepend(dateDiv);
+
 					if (name === 'reply'){
 						
+						$(del).attr('name', 'deleteanswer');
+						$(edit).attr('name', 'editanswer');
+
 						$('#replies').prepend(answerDiv);
 						$(answerDiv).after(followDiv);
 						$(answerDiv).after(follow);
@@ -168,12 +181,15 @@
 
 
 					else if (name === 'followup'){
+
+						$(edit).attr('name', 'followupedit');
+						$(del).attr('name', 'followupdelete');
+
 						n = Number(which);
 						$('.followDiv.'+n).append(answerDiv);
 						$(del).addClass("f");
 
 					}
-
 					
 				}
 

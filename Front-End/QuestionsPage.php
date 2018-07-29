@@ -1,3 +1,14 @@
+<?php
+	session_start();
+	$user = $_SESSION['user_id'];
+	echo '<script>
+	var user_id = ' . $user . ';
+	</script>';
+	if (!isset($user)){
+		echo '<script> alert("Not logged in"); location.href = "../Front-End/login.html";</script>'; #
+	} #can't access if not logged in
+?>
+
 <!DOCTYPE html>
 <html>
 

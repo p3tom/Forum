@@ -46,6 +46,7 @@ body
 	width: 1000px;
 	position: relative;
 	top: 75px;
+	display: none;
 }
 
 #editq
@@ -140,6 +141,11 @@ textarea
 	margin-left: 5px;
 	position: relative;
 	bottom: 5px;
+}
+
+.date
+{
+	font-size: 0.8em;
 }
 
 
