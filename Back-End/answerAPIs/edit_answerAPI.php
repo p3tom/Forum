@@ -34,13 +34,13 @@
       else{
         $update_answerquery = "UPDATE answer SET message='$message', post_date='$date'  WHERE answer_id='$answer_id'";
         $result = mysqli_query($connection, $update_answerquery);
-        $json_array = array();
-        while($row = mysqli_fetch_assoc($result)){
-        $json_array[] = $row;
-        }
-          echo json_encode($json_array);
-          $answer_Data = ['answer ID'=>$answer_id, 'Date'=>$date, 'Message'=> $message];
-          $json = json_encode($answer_Data);
+       // $json_array = array();
+       // while($row = mysqli_fetch_assoc($result)){
+       // $json_array[] = $row;
+       // }
+         // echo json_encode($json_array);
+          //$answer_Data = ['answer ID'=>$answer_id, 'Date'=>$date, 'Message'=> $message];
+         // $json = json_encode($answer_Data);
         //  echo $json;
           echo $json = '1';
       }

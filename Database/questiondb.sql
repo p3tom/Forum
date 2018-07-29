@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2018 at 01:47 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Generation Time: Jul 28, 2018 at 04:33 PM
+-- Server version: 10.1.33-MariaDB
+-- PHP Version: 7.2.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,11 +30,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `answer` (
   `answer_id` int(11) NOT NULL,
-  `ques_id` int(11) DEFAULT NULL,
-  `user_id` varchar(128) NOT NULL,
-  `date` datetime NOT NULL,
-  `message` text NOT NULL
+  `ques_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_date` datetime NOT NULL,
+  `message` text NOT NULL,
+  `score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `answer`
+--
+
+INSERT INTO `answer` (`answer_id`, `ques_id`, `user_id`, `post_date`, `message`, `score`) VALUES
+(2, 0, 2, '2018-07-28 16:07:47', 'test answer 1', 0),
+(3, 0, 2, '2018-07-28 16:27:53', 'test answer 1', 0);
 
 -- --------------------------------------------------------
 
@@ -45,9 +54,10 @@ CREATE TABLE `answer` (
 CREATE TABLE `followup` (
   `followup_id` int(11) NOT NULL,
   `answer_id` int(11) DEFAULT NULL,
-  `user_id` varchar(128) NOT NULL,
-  `date` datetime NOT NULL,
-  `message` text NOT NULL
+  `user_id` int(11) NOT NULL,
+  `post_date` datetime NOT NULL,
+  `message` text NOT NULL,
+  `score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -84,7 +94,15 @@ INSERT INTO `login` (`user_id`, `first_name`, `last_name`, `email`, `password`) 
 (91, 'First', 'Last', 'uhhyhyhyg@email.com', '$2y$10$MNdxA1Jm8TprC5KaIeqCTegR/0GTSWhBseO2pEQSY6poLoP.au6De'),
 (92, 'First', 'Last', 'test6@email.com', '$2y$10$gm4bljkagZ.RUQlrdApyPuWHfduZQhg7D9DniBtm36PW3ZuFonpt2'),
 (93, 'First', 'Last', 'test7@email.com', '$2y$10$Y55bmaOLMGcKeL.u97LH1e9jB4hkW74bncLdUnEEYGep7LeKMBqIy'),
-(94, 'First', 'Last', 'test8@email.com', '$2y$10$XJYN/jN.a5MoyK.Qh82SYOvwbnxQ95gK53fNZ8lBSCw1ptEV0bXfC');
+(94, 'First', 'Last', 'test8@email.com', '$2y$10$XJYN/jN.a5MoyK.Qh82SYOvwbnxQ95gK53fNZ8lBSCw1ptEV0bXfC'),
+(95, 'First', 'Last', 'test9@email.com', '$2y$10$kZGQpouotC6Qxube8/ZS9.yVCKmbF28K9.EcCknSpDxZ5d/yDYSty'),
+(96, 'First', 'Last', 'test11@email.com', '$2y$10$Qq7S0QoN7VqVWAyZqWUaUuJUtEcE8GvIymALs6DUquDjC5W0b8zNq'),
+(97, 'First', 'Last', 'test12@email.com', '$2y$10$VoulQzFKvqfm.6ZviF7wkOuGZNkcswMu6X1Ysj5Hxt/bGZZPK/x9e'),
+(98, 'First', 'Last', 'test13@email.com', '$2y$10$Q1jkVWxeH15HNzSO33S2/O/mh7J3C7.WNeXaLYwHVo23tlzMLNY5e'),
+(99, 'First', 'Last', 'test14@email.com', '$2y$10$e4AwGhLCL3M3COvFlxovlukKqyRURNClBZgRp5LsJ6LEes/1rCVTK'),
+(100, 'First', 'Last', 'test15@email.com', '$2y$10$8/t8WB1Fa7RhMtyOaeYnfu5qRi/jPAo35ZhmpVpRBbLbUbNYuBhT2'),
+(101, 'First', 'Last', 'test16@email.com', '$2y$10$x5Muc.0IUXQsin3anPV3vuLTwOeqvBzxYJE0oE61TGi3MfQjbB1zm'),
+(102, 'Captain', 'Haddock', 'blistering@barnacles.com', '$2y$10$xUf6S2WgAE7o0uHR7NSdpu3PgWb0d9H5pBdwiqmQBT46zMqQrVDi.');
 
 -- --------------------------------------------------------
 
@@ -94,26 +112,29 @@ INSERT INTO `login` (`user_id`, `first_name`, `last_name`, `email`, `password`) 
 
 CREATE TABLE `question` (
   `ques_id` int(11) NOT NULL,
-  `user_id` varchar(128) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `post_date` datetime NOT NULL,
   `message` text NOT NULL,
-  `title` text NOT NULL
+  `ques_title` text NOT NULL,
+  `score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
 --
 
-INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `title`) VALUES
-(2, '2', '2018-06-20 17:38:05', 'What is CSS?', 'css'),
-(3, '3', '2018-07-03 21:54:19', 'What is Jquery?', 'Jquery'),
-(4, '4', '2018-07-03 21:58:28', 'What is PHP?', 'php'),
-(6, '2', '0000-00-00 00:00:00', 'test question', 'Title'),
-(8, '2', '0000-00-00 00:00:00', 'test question 1', 'test title'),
-(9, '1', '0000-00-00 00:00:00', 'test question 2', 'title 2'),
-(10, '1', '0000-00-00 00:00:00', 'question edit ', 'title 2'),
-(11, '1', '0000-00-00 00:00:00', 'test question 3', 'title 3'),
-(12, '1', '2018-07-26 05:06:59', 'test question 4', 'title 4');
+INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `ques_title`, `score`) VALUES
+(2, 2, '2018-06-20 17:38:05', 'What is CSS?', 'css', 0),
+(3, 3, '2018-07-03 21:54:19', 'What is Jquery?', 'Jquery', 0),
+(4, 4, '2018-07-03 21:58:28', 'What is PHP?', 'php', 0),
+(6, 2, '2018-07-28 14:38:11', 'edited question 1', 'Title', 0),
+(9, 1, '2018-07-28 14:38:51', 'edited question 2', 'title 2', 0),
+(11, 1, '0000-00-00 00:00:00', 'test question 3', 'title 3', 0),
+(12, 1, '2018-07-26 05:06:59', 'test question 4', 'title 4', 0),
+(13, 25, '2018-07-26 10:05:27', 'test question 4', 'title 4', 0),
+(15, 25, '2018-07-26 10:07:48', 'test question 5', 'title 5', 0),
+(16, 25, '2018-07-27 04:50:34', 'test question 6', 'title 6', 0),
+(19, 1, '2018-07-27 09:53:29', 'test question 7', 'title 7', 1);
 
 --
 -- Indexes for dumped tables
@@ -123,15 +144,13 @@ INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `title`) V
 -- Indexes for table `answer`
 --
 ALTER TABLE `answer`
-  ADD PRIMARY KEY (`answer_id`),
-  ADD KEY `ques_id` (`ques_id`);
+  ADD PRIMARY KEY (`answer_id`);
 
 --
 -- Indexes for table `followup`
 --
 ALTER TABLE `followup`
-  ADD PRIMARY KEY (`followup_id`),
-  ADD KEY `answer_id` (`answer_id`);
+  ADD PRIMARY KEY (`followup_id`);
 
 --
 -- Indexes for table `login`
@@ -150,6 +169,12 @@ ALTER TABLE `question`
 --
 
 --
+-- AUTO_INCREMENT for table `answer`
+--
+ALTER TABLE `answer`
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `followup`
 --
 ALTER TABLE `followup`
@@ -159,29 +184,13 @@ ALTER TABLE `followup`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `answer`
---
-ALTER TABLE `answer`
-  ADD CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`ques_id`) REFERENCES `question` (`ques_id`);
-
---
--- Constraints for table `followup`
---
-ALTER TABLE `followup`
-  ADD CONSTRAINT `followup_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`answer_id`);
+  MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

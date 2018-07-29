@@ -1,8 +1,6 @@
 <?php
   session_start();
-
   //if(isset($_POST['questionpost'])){
-
       //$ques_id = $_POST['ques_id'];
       $user_id = $message = $title = '';
       $inputArray = [$user_id, $message, $title];
@@ -13,7 +11,6 @@
       $date = date('Y-m-d H:i:s', time());  #timestamp
       $message = $_POST['message'];
       $title = $_POST['title'];
-
       foreach($inputArray as $row => $postRow){ #make array of inputs
         foreach($_POST as $postRow => $value){
           //echo not_filled($value);
@@ -26,7 +23,6 @@
           } #close if statement
         } #close inner foreach
       } #close outer foreach
-
       if (!empty($blank_fields)){
         echo implode(" is required. <br/>", $blank_fields). " is required.";
         //echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
@@ -42,7 +38,6 @@
           $query = mysqli_query($connection, $insert_query);
           //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
           //$question_Data = ['Question ID'=> $ques_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
-
           //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
           //$json = json_encode($question_Data);
           // echo $json;
@@ -50,7 +45,6 @@
         }
       }
   //  }
-
   function not_filled($input){
     if (empty($input)) {
       return true; //input is not filled

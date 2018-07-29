@@ -4,7 +4,7 @@
 //  if(isset($_POST['commentreply'])){
 
   $followup_id = $answer_id = $user_id = $message = '';
-  $inputArray = [$followup_id, $answer_id, $user_id, $message ];
+  $inputArray = [$answer_id, $user_id, $message];
   $blank_fields = [];
   $is_filled = true;
 

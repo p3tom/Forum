@@ -36,7 +36,7 @@
       else{    
     $update_followupquery = "UPDATE followup SET message='$message', post_date='$date'  WHERE followup_id='$followup_id'";
     $result = mysqli_query($connection, $update_followupquery);
-    $json_array = array();
+    /*$json_array = array();
     while($row = mysqli_fetch_assoc($result)){
     $json_array[] = $row;
     }
@@ -48,7 +48,7 @@
         echo json_encode($json_array);
         $$followup_Data = ['$followup ID'=>$answer_id, 'Date'=>$date, 'Message'=> $message];
         $json = json_encode($followup_Data);
-      //  echo $json;
+      //  echo $json;*/
         echo $json = '1';
     }
   }

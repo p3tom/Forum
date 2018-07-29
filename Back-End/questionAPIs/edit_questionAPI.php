@@ -7,7 +7,7 @@
     $is_filled = true;
     $ques_id = $_POST['ques_id'];
     //$user_id = $_SESSION['email'];
-    $date = date('Y-m-d H:i:s', time());
+    $date = time();
     $message = $_POST['message'];
     foreach($inputArray as $row => $postRow){ #make array of inputs
       foreach($_POST as $postRow => $value){
@@ -16,14 +16,13 @@
           //$blank_fields[$postRow] = $postRow . " is required <br />";
           $blank_fields[$postRow] = $postRow;
           $is_filled = false;
-          echo '0';
           //echo '<br />' .implode($blank_fields);
         } #close if statement
       } #close inner foreach
     } #close outer foreach
     if (!empty($blank_fields)){
       echo implode(" is required. <br/>", $blank_fields). " is required.";
-    //  echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
+      echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
     }
     if ($is_filled === true ) {
       $connection = mysqli_connect("localhost", "root", "", "questiondb");
@@ -35,18 +34,17 @@
         $update_quesquery = "UPDATE question SET message='$message', post_date='$date'  WHERE ques_id= '$ques_id'";
         $result = mysqli_query($connection, $update_quesquery);
 
-       // $update_quesquery1 =  "SELECT * from question where ques_id = '$ques_id'";
-        //$result1 = mysqli_query($connection, $update_quesquery1);
-        //$json_array = array();
+        $update_quesquery1 =  "SELECT * from question where ques_id = '$ques_id'";
+        $result1 = mysqli_query($connection, $update_quesquery1);
+        $json_array = array();
         //print_r($result1) ;
-        /*while($row = mysqli_fetch_assoc($result1)){
+        while($row = mysqli_fetch_assoc($result1)){
           $json_array[] = $row;
         }
         echo json_encode($json_array);
         $question_Data = ['Question ID'=>$ques_id, 'Date'=>$date, 'Message'=> $message];
         $json = json_encode($question_Data);
-      //  echo $json;*/
-      echo $json = '1';
+      //  echo $json;
       }
     }
   //}
