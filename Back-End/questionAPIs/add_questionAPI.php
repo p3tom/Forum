@@ -7,8 +7,8 @@
       $blank_fields = [];
       $is_filled = true;
       $user_id = $_POST['user_id'];
-      //$date = date('d-M-Y H:i:s', time());  #timestamp
-      $date = date('Y-m-d H:i:s', time());  #timestamp
+      $date = date('d-M-Y H:i:s', time());  #timestamp
+     // $date = date('Y-m-d H:i:s', time());  #timestamp
       $message = $_POST['message'];
       $title = $_POST['title'];
       foreach($inputArray as $row => $postRow){ #make array of inputs
