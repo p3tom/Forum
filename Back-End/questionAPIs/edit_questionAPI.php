@@ -1,8 +1,8 @@
 <?php
   session_start();
   //if(isset($_POST['editquestion'])) {
-    $ques_id = $message = '';
-    $inputArray = [$ques_id, $message];
+    $ques_id = $message = $title = '';
+    $inputArray = [$ques_id, $message, $title];
     $blank_fields = [];
     $is_filled = true;
     $ques_id = $_POST['ques_id'];
@@ -14,6 +14,7 @@
     $date = date('d-M-Y H:i:s', time());
 >>>>>>> Forumbranch
     $message = $_POST['message'];
+    $ques_title = $_POST['ques_title'];
     foreach($inputArray as $row => $postRow){ #make array of inputs
       foreach($_POST as $postRow => $value){
         //echo not_filled($value);
@@ -41,9 +42,10 @@
       }
       else{
         //var_dump($connection);
-        $update_quesquery = "UPDATE question SET message='$message', post_date='$date'  WHERE ques_id= '$ques_id'";
+        $update_quesquery = "UPDATE question SET message='$message', post_date='$date', ques_title = '$ques_title'  WHERE ques_id= '$ques_id'";
         $result = mysqli_query($connection, $update_quesquery);
 
+<<<<<<< HEAD
         $update_quesquery1 =  "SELECT * from question where ques_id = '$ques_id'";
         $result1 = mysqli_query($connection, $update_quesquery1);
         $json_array = array();
@@ -55,6 +57,13 @@
         $question_Data = ['Question ID'=>$ques_id, 'Date'=>$date, 'Message'=> $message];
         $json = json_encode($question_Data);
       //  echo $json;
+=======
+        $update_quesquery1 =  "SELECT * from question WHERE ques_id = '$ques_id' AND message = '$message' AND ques_title = '$ques_title'";
+        $result1 = mysqli_query($connection, $update_quesquery1);
+        if (mysqli_num_rows($result1) == 1) { #make sure question has been edited
+          echo $json = '1';
+        }
+>>>>>>> 7a6f7f1c775812bae2f01a0879341510a2d3c931
       }
     }
   //}

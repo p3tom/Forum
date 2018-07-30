@@ -14,7 +14,7 @@
       //$user_id = $_SESSION['user_id'];
       $user_id = $_POST['user_id']; #Input user_id for testing purposes
       //echo $user_id;
-      $date = date('d-M-Y H:i:s', time()); #timestamp
+      $date = date('Y-m-d H:i:s', time()); #timestamp
       $message = $_POST['message'];
 
       foreach($inputArray as $row => $postRow){ #make array of inputs
@@ -49,9 +49,15 @@
           //$json_array = array();
          // $json = json_encode($answer_Data);
           // echo $json;
-          echo $json = '1';
+          $insert_query1 =  "SELECT * from answer where message = '$message'";
+          $result1 = mysqli_query($connection, $insert_query1);
+          if (mysqli_num_rows($result1) == 1) { #make sure question has been deleted
+            //echo "Question deleted <br/>";
+            echo $json = '1';
+            }
+          }
         }
-      }
+
   //}
 
 

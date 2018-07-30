@@ -3,16 +3,22 @@
 
 //  if(isset($_POST['commentreply'])){
 
+<<<<<<< HEAD
   $followup_id = $answer_id = $user_id = $message = '';
   $inputArray = [$answer_id, $user_id, $message];
+=======
+  $followup_id = $answer_id = $user_id = $message = $score = '';
+  $inputArray = [$followup_id, $answer_id, $user_id, $message, $score];
+>>>>>>> 7a6f7f1c775812bae2f01a0879341510a2d3c931
   $blank_fields = [];
   $is_filled = true;
 
       //$followup_id = $_POST['followup_id'];
       $answer_id = $_POST['answer_id'];
       $user_id = $_POST['user_id'];
-      $date = date('d-M-Y H:i:s', time());  #timestamp
+      $date = date('Y-m-d H:i:s', time());  #timestamp
       $message = $_POST['message'];
+      $score = $_POST['score'];
 
       foreach($inputArray as $row => $postRow){ #make array of inputs
         foreach($_POST as $postRow => $value){
@@ -31,7 +37,7 @@
         echo implode(" is required. <br/>", $blank_fields). " is required.";
         //echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
       }
-      
+
       if ($is_filled === true ) {
         $connection = mysqli_connect("localhost", "root", "", "questiondb"); #to connect database
         if(!$connection){
@@ -41,7 +47,7 @@
           //$insert_query = "INSERT INTO followup SET followup_id = '$followup_id', answer_id = '$answer_id', user_id = '$user_id',
           //post_date = '$date', message = '$message'"; #insert the data to database
           $insert_query = "INSERT INTO followup SET answer_id = '$answer_id', user_id = '$user_id',
-          post_date = '$date', message = '$message'"; #insert the data to database
+          post_date = '$date', message = '$message', score = '$score'"; #insert the data to database
           $query = mysqli_query($connection, $insert_query);
           //$followup_Data = ['Followup ID'=> $followup_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
           $followup_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
@@ -55,7 +61,7 @@
       }
 
   //  }
-  
+
   function not_filled($input){
     if (empty($input)) {
       return true; //input is not filled

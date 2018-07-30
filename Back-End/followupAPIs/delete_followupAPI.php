@@ -12,7 +12,6 @@ session_start();
               echo '0 <br/>';
             }
             else{
-            $followup_id = $_POST['followup_id'];
             $delete_query = "DELETE FROM followup WHERE followup_id='$followup_id'";
             $result = mysqli_query($connection, $delete_query);
             $delete_query1 =  "SELECT * from followup where followup_id = '$followup_id'";
