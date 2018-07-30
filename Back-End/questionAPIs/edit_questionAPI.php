@@ -7,7 +7,12 @@
     $is_filled = true;
     $ques_id = $_POST['ques_id'];
     //$user_id = $_SESSION['email'];
+<<<<<<< HEAD
     $date = time();
+=======
+    //$date = time();
+    $date = date('d-M-Y H:i:s', time());
+>>>>>>> Forumbranch
     $message = $_POST['message'];
     foreach($inputArray as $row => $postRow){ #make array of inputs
       foreach($_POST as $postRow => $value){
@@ -22,7 +27,12 @@
     } #close outer foreach
     if (!empty($blank_fields)){
       echo implode(" is required. <br/>", $blank_fields). " is required.";
+<<<<<<< HEAD
       echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
+=======
+      //echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
+      echo '0';
+>>>>>>> Forumbranch
     }
     if ($is_filled === true ) {
       $connection = mysqli_connect("localhost", "root", "", "questiondb");
