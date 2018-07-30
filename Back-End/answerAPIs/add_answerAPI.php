@@ -35,7 +35,7 @@
 
       if ($is_filled === true ) {
         $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
-        //$insert_query = "INSERT INTO reply SET ques_id = '$ques_id', user_id = '$user_id', date = '$date', message = '$message'";
+       
         if(!$connection){
           die("Connection failed:".mysqli_connect_error());
         }

@@ -5,6 +5,7 @@
 
   $answer_id = $user_id = $message = $score = '';
   $inputArray = [$answer_id, $user_id, $message, $score];
+
   $blank_fields = [];
   $is_filled = true;
 
