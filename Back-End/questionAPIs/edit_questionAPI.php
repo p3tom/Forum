@@ -1,8 +1,8 @@
 <?php
   session_start();
   //if(isset($_POST['editquestion'])) {
-    $ques_id = $message = $title = '';
-    $inputArray = [$ques_id, $message, $title];
+    $ques_id = $message = $ques_title = '';
+    $inputArray = [$ques_id, $message, $ques_title];
     $blank_fields = [];
     $is_filled = true;
     $ques_id = $_POST['ques_id'];

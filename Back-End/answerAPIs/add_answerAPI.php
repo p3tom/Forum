@@ -1,12 +1,10 @@
 <?php
   session_start();
-  #Preethi's table code
-
-  //if(isset($_POST['replypost'])) {
+    //if(isset($_POST['replypost'])) {
       //answer_id auto incremented primary key
       //$answer_id = $_POST['answer_id'];
-      $ques_id = $user_id = $message = '';
-      $inputArray = [$ques_id, $user_id, $message];
+      $ques_id = $user_id = $message = $score = '';
+      $inputArray = [$ques_id, $user_id, $message, $score];
       $blank_fields = [];
       $is_filled = true;
       $ques_id = $_POST['ques_id']; #NOT SURE HOW TO RETRIEVE THIS  #it automatically create the value in question table
@@ -14,8 +12,9 @@
       //$user_id = $_SESSION['user_id'];
       $user_id = $_POST['user_id']; #Input user_id for testing purposes
       //echo $user_id;
-      $date = date('Y-m-d H:i:s', time()); #timestamp
+      $post_date = date('Y-m-d H:i:s', time()); #timestamp
       $message = $_POST['message'];
+      $score = $_POST['score'];
 
       foreach($inputArray as $row => $postRow){ #make array of inputs
         foreach($_POST as $postRow => $value){
@@ -41,7 +40,7 @@
           die("Connection failed:".mysqli_connect_error());
         }
         else{
-          $insert_query = "INSERT INTO answer SET user_id = '$user_id', post_date = '$date', message = '$message'";
+          $insert_query = "INSERT INTO answer SET ques_id = '$ques_id', user_id = '$user_id', post_date = '$post_date', message = '$message', score = '$score'";
           $query = mysqli_query($connection, $insert_query);
           //echo '<script> alert("Reply successfully posted"); location.href = "../Front-End/Question.html";</script>'; #
           //$reply_Data = ['Answer ID' => $answer_id, 'Question ID'=> $ques_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
@@ -49,12 +48,15 @@
           //$json_array = array();
          // $json = json_encode($answer_Data);
           // echo $json;
-          $insert_query1 =  "SELECT * from answer where message = '$message'";
+          $insert_query1 =  "SELECT * from answer where post_date = '$post_date'";
           $result1 = mysqli_query($connection, $insert_query1);
-          if (mysqli_num_rows($result1) == 1) { #make sure question has been deleted
+          if (mysqli_num_rows($result1) == 1) { #make sure question has been inserted
             //echo "Question deleted <br/>";
-            echo $json = '1';
+            echo '1';
             }
+          else {
+            echo '0';
+          }
           }
         }
 

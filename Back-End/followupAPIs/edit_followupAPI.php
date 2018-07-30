@@ -1,15 +1,14 @@
 <?php
   session_start();
   //if(isset($_POST['followupedit'])) {
-    $followup_id = $answer_id = $message = '';
-    $inputArray = [$followup_id, $answer_id, $message];
+    $followup_id = $message = '';
+    $inputArray = [$followup_id, $message];
     $blank_fields = [];
     $is_filled = true;
 
     $followup_id = $_POST['followup_id'];
-    $answer_id = $_POST['answer_id'];
     //$user_id = $_SESSION['email'];
-    $date = time();
+    $post_date = date('Y-m-d H:i:s', time());  #timestamp
     $message = $_POST['message'];
 
     foreach($inputArray as $row => $postRow){ #make array of inputs
@@ -33,24 +32,20 @@
       if(!$connection){
           die("Connection failed:".mysqli_connect_error());
       }
-      else{    
-    $update_followupquery = "UPDATE followup SET message='$message', post_date='$date'  WHERE followup_id='$followup_id'";
+      else{
+    $update_followupquery = "UPDATE followup SET message='$message', post_date='$post_date'  WHERE followup_id='$followup_id'";
     $result = mysqli_query($connection, $update_followupquery);
-    $json_array = array();
-    while($row = mysqli_fetch_assoc($result)){
-    $json_array[] = $row;
-    }
-    echo json_encode($json_array);
 
-    while($row = mysqli_fetch_assoc($result)){
-      $json_array[] = $row;
+    $update_followupquery1 =  "SELECT * from followup where post_date = '$post_date'";
+    $result1 = mysqli_query($connection, $update_followupquery1);
+    if (mysqli_num_rows($result1) == 1) { #make sure question has been edited
+      echo $json = '1';
       }
-        echo json_encode($json_array);
-        $$followup_Data = ['$followup ID'=>$answer_id, 'Date'=>$date, 'Message'=> $message];
-        $json = json_encode($followup_Data);
-      //  echo $json;
-        echo $json = '1';
+    else {
+        echo '0';
+      }
     }
+
   }
 
   //}
@@ -63,4 +58,3 @@
       return false; //input is filled
     }
   }
-

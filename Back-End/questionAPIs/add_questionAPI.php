@@ -4,15 +4,15 @@
   //if(isset($_POST['questionpost'])){
 
       //$ques_id = $_POST['ques_id'];
-      $user_id = $message = $title = $score = '';
-      $inputArray = [$user_id, $message, $title, $score];
+      $user_id = $message = $ques_title = $score = '';
+      $inputArray = [$user_id, $message, $ques_title, $score];
       $blank_fields = [];
       $is_filled = true;
       $user_id = $_POST['user_id'];
       //$date = date('d-M-Y H:i:s', time());  #timestamp
-      $date = date('Y-m-d H:i:s', time());  #timestamp
+      $post_date = date('Y-m-d H:i:s', time());  #timestamp
       $message = $_POST['message'];
-      $title = $_POST['title'];
+      $ques_title = $_POST['ques_title'];
       $score = $_POST['score'];
 
       foreach($inputArray as $row => $postRow){ #make array of inputs
@@ -39,7 +39,7 @@
             die("Connection failed:".mysqli_connect_error());
         }
         else{
-          $insert_query = "INSERT INTO question SET user_id = '$user_id', post_date = '$date', message = '$message', title = '$title', score = '$score'"; #insert the data to database
+          $insert_query = "INSERT INTO question SET user_id = '$user_id', post_date = '$post_date', message = '$message', ques_title = '$ques_title', score = '$score'"; #insert the data to database
           $query = mysqli_query($connection, $insert_query);
           //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
           //$question_Data = ['Question ID'=> $ques_id, 'User ID'=>$user_id, 'Date'=>$date, 'Message'=> $message];
@@ -47,11 +47,14 @@
           //$question_Data = ['User ID'=>$user_id, 'Date'=>$date, 'Title'=> $title, 'Message'=> $message];
           //$json = json_encode($question_Data);
           // echo $json;
-          $insert_query1 =  "SELECT * from question where message = '$message'";
+          $insert_query1 =  "SELECT * from question where post_date = '$post_date'";
           $result1 = mysqli_query($connection, $insert_query1);
           if (mysqli_num_rows($result1) == 1) { #make sure question has been deleted
             //echo "Question deleted <br/>";
-            echo $json = '1';
+            echo '1';
+            }
+            else {
+              echo '0';
             }
           }
         }
