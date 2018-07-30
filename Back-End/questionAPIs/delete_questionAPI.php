@@ -15,11 +15,14 @@ session_start();
                 $delete_query = "DELETE FROM question WHERE ques_id='$ques_id'";
                 $result = mysqli_query($connection, $delete_query);
 
-                $delete_query1 =  "SELECT * from question where ques_id = '$ques_id'";
+                $delete_query1 =  "SELECT * from question where ques_id ='$ques_id'";
                 $result1 = mysqli_query($connection, $delete_query1);
                 if (mysqli_num_rows($result1) == 0) { #make sure question has been deleted
                   //echo "Question deleted <br/>";
-                  echo $json = '1';
+                  echo '1';
+                  }
+                  else {
+                    echo '0';
                   }
                 }
 

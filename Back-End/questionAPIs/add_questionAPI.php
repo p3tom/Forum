@@ -12,7 +12,6 @@
       $message = $_POST['message'];
       $ques_title = $_POST['ques_title'];
       $message = $_POST['message'];
-      $title = $_POST['title'];
       $score = $_POST['score'];
 
       foreach($inputArray as $row => $postRow){ #make array of inputs

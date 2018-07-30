@@ -7,12 +7,8 @@
     $is_filled = true;
     $ques_id = $_POST['ques_id'];
     //$user_id = $_SESSION['email'];
-<<<<<<< HEAD
-    $date = time();
-=======
     //$date = time();
-    $date = date('d-M-Y H:i:s', time());
->>>>>>> Forumbranch
+    $post_date = date('Y-m-d H:i:s', time());
     $message = $_POST['message'];
     $ques_title = $_POST['ques_title'];
     foreach($inputArray as $row => $postRow){ #make array of inputs
@@ -22,18 +18,15 @@
           //$blank_fields[$postRow] = $postRow . " is required <br />";
           $blank_fields[$postRow] = $postRow;
           $is_filled = false;
+          echo '0';
           //echo '<br />' .implode($blank_fields);
         } #close if statement
       } #close inner foreach
     } #close outer foreach
     if (!empty($blank_fields)){
       echo implode(" is required. <br/>", $blank_fields). " is required.";
-<<<<<<< HEAD
-      echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
-=======
       //echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/signup.html";</script>';
       echo '0';
->>>>>>> Forumbranch
     }
     if ($is_filled === true ) {
       $connection = mysqli_connect("localhost", "root", "", "questiondb");
@@ -42,28 +35,17 @@
       }
       else{
         //var_dump($connection);
-        $update_quesquery = "UPDATE question SET message='$message', post_date='$date', ques_title = '$ques_title'  WHERE ques_id= '$ques_id'";
+        $update_quesquery = "UPDATE question SET message='$message', post_date='$post_date', ques_title = '$ques_title'  WHERE ques_id= '$ques_id'";
         $result = mysqli_query($connection, $update_quesquery);
-
-<<<<<<< HEAD
-        $update_quesquery1 =  "SELECT * from question where ques_id = '$ques_id'";
-        $result1 = mysqli_query($connection, $update_quesquery1);
-        $json_array = array();
-        //print_r($result1) ;
-        while($row = mysqli_fetch_assoc($result1)){
-          $json_array[] = $row;
-        }
-        echo json_encode($json_array);
-        $question_Data = ['Question ID'=>$ques_id, 'Date'=>$date, 'Message'=> $message];
-        $json = json_encode($question_Data);
-      //  echo $json;
-=======
-        $update_quesquery1 =  "SELECT * from question WHERE ques_id = '$ques_id' AND message = '$message' AND ques_title = '$ques_title'";
+        $update_quesquery1 =  "SELECT * from question WHERE post_date ='$post_date'";
         $result1 = mysqli_query($connection, $update_quesquery1);
         if (mysqli_num_rows($result1) == 1) { #make sure question has been edited
           echo $json = '1';
         }
->>>>>>> 7a6f7f1c775812bae2f01a0879341510a2d3c931
+        else {
+          echo '0';
+        }
+
       }
     }
   //}
