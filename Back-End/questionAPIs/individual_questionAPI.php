@@ -1,6 +1,7 @@
 <?php
  session_start();
     //if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $list_answer = '';
         $ques_id = $_POST['ques_id'];
         if (empty($ques_id)) {
           echo "Question ID is required. <br/>";
@@ -23,5 +24,28 @@
                 }
                 echo json_encode($json_array);
             }
+
+            //$list_answer = file_get_contents('../answerAPIs/list_answerAPI.php');
+            //$list_answer = json_decode($list_answer);
           }
-  //  }
+/*
+function CallAPI($method, $url, $data = false) {
+  $curl = curl_init();
+  switch ($method) {
+    case "POST":
+      curl_setopt($curl, CURLOPT_POST, 1);
+        if ($data){
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+        break;
+    default:
+    if ($data){
+        $url = sprintf("%s?%s", $url, http_build_query($data));
+      }
+    }
+    $result = curl_exec($curl);
+   if(!$result){die("Connection Failure");}
+   curl_close($curl);
+   return $result;
+ }
+ */ 

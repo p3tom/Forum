@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2018 at 04:33 PM
+-- Generation Time: Jul 30, 2018 at 10:54 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -35,7 +35,6 @@ CREATE TABLE `answer` (
   `post_date` datetime NOT NULL,
   `message` text NOT NULL,
   `score` int(11) NOT NULL
-  FOREIGN KEY (ques_id) REFERENCES question(ques_id));
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -43,8 +42,9 @@ CREATE TABLE `answer` (
 --
 
 INSERT INTO `answer` (`answer_id`, `ques_id`, `user_id`, `post_date`, `message`, `score`) VALUES
-(2, 0, 2, '2018-07-28 16:07:47', 'test answer 1', 0),
-(3, 0, 2, '2018-07-28 16:27:53', 'test answer 1', 0);
+(3, 1, 1, '2018-07-30 06:23:42', 'test answer 1', 1),
+(4, 1, 2, '2018-07-30 06:33:46', 'test answer 2', 0),
+(5, 1, 2, '2018-07-30 06:38:00', 'test answer 3', 2);
 
 -- --------------------------------------------------------
 
@@ -54,12 +54,19 @@ INSERT INTO `answer` (`answer_id`, `ques_id`, `user_id`, `post_date`, `message`,
 
 CREATE TABLE `followup` (
   `followup_id` int(11) NOT NULL,
-  `answer_id` int(11) DEFAULT NULL,
+  `answer_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `post_date` datetime NOT NULL,
   `message` text NOT NULL,
   `score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `followup`
+--
+
+INSERT INTO `followup` (`followup_id`, `answer_id`, `user_id`, `post_date`, `message`, `score`) VALUES
+(1, 3, 3, '2018-07-30 06:45:41', 'test followup 1', 1);
 
 -- --------------------------------------------------------
 
@@ -125,17 +132,7 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `ques_title`, `score`) VALUES
-(2, 2, '2018-06-20 17:38:05', 'What is CSS?', 'css', 0),
-(3, 3, '2018-07-03 21:54:19', 'What is Jquery?', 'Jquery', 0),
-(4, 4, '2018-07-03 21:58:28', 'What is PHP?', 'php', 0),
-(6, 2, '2018-07-28 14:38:11', 'edited question 1', 'Title', 0),
-(9, 1, '2018-07-28 14:38:51', 'edited question 2', 'title 2', 0),
-(11, 1, '0000-00-00 00:00:00', 'test question 3', 'title 3', 0),
-(12, 1, '2018-07-26 05:06:59', 'test question 4', 'title 4', 0),
-(13, 25, '2018-07-26 10:05:27', 'test question 4', 'title 4', 0),
-(15, 25, '2018-07-26 10:07:48', 'test question 5', 'title 5', 0),
-(16, 25, '2018-07-27 04:50:34', 'test question 6', 'title 6', 0),
-(19, 1, '2018-07-27 09:53:29', 'test question 7', 'title 7', 1);
+(1, 1, '2018-07-30 06:28:25', 'edited question 1', 'title 1', 1);
 
 --
 -- Indexes for dumped tables
@@ -145,13 +142,15 @@ INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `ques_titl
 -- Indexes for table `answer`
 --
 ALTER TABLE `answer`
-  ADD PRIMARY KEY (`answer_id`);
+  ADD PRIMARY KEY (`answer_id`),
+  ADD KEY `ques_id` (`ques_id`);
 
 --
 -- Indexes for table `followup`
 --
 ALTER TABLE `followup`
-  ADD PRIMARY KEY (`followup_id`);
+  ADD PRIMARY KEY (`followup_id`),
+  ADD KEY `answer_id` (`answer_id`);
 
 --
 -- Indexes for table `login`
@@ -173,13 +172,13 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT for table `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `followup`
 --
 ALTER TABLE `followup`
-  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `followup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `login`
@@ -191,7 +190,23 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `answer`
+--
+ALTER TABLE `answer`
+  ADD CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`ques_id`) REFERENCES `question` (`ques_id`);
+
+--
+-- Constraints for table `followup`
+--
+ALTER TABLE `followup`
+  ADD CONSTRAINT `followup_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`answer_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

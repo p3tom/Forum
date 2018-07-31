@@ -12,7 +12,8 @@
       $message = $_POST['message'];
       $ques_title = $_POST['ques_title'];
       $message = $_POST['message'];
-      $score = $_POST['score'];
+      //$score = $_POST['score'];
+      $score = '0'; #default value for score = 0
 
       foreach($inputArray as $row => $postRow){ #make array of inputs
         foreach($_POST as $postRow => $value){
@@ -57,7 +58,7 @@
         }
   //  }
   function not_filled($input){
-    if (empty($input)) {
+    if (is_null($input)) {
       return true; //input is not filled
     }
     else {
