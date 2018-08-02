@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2018 at 10:54 AM
+-- Generation Time: Aug 02, 2018 at 05:13 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -44,7 +44,23 @@ CREATE TABLE `answer` (
 INSERT INTO `answer` (`answer_id`, `ques_id`, `user_id`, `post_date`, `message`, `score`) VALUES
 (3, 1, 1, '2018-07-30 06:23:42', 'test answer 1', 1),
 (4, 1, 2, '2018-07-30 06:33:46', 'test answer 2', 0),
-(5, 1, 2, '2018-07-30 06:38:00', 'test answer 3', 2);
+(5, 1, 2, '2018-07-30 06:38:00', 'test answer 3', 2),
+(6, 2, 2, '2018-07-31 05:26:10', 'test answer 4', 0),
+(7, 2, 1, '2018-07-31 05:28:07', 'insert answer here', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `downvote`
+--
+
+CREATE TABLE `downvote` (
+  `down_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `ques_id` int(11) NOT NULL,
+  `answer_id` int(11) NOT NULL,
+  `followup_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -66,7 +82,9 @@ CREATE TABLE `followup` (
 --
 
 INSERT INTO `followup` (`followup_id`, `answer_id`, `user_id`, `post_date`, `message`, `score`) VALUES
-(1, 3, 3, '2018-07-30 06:45:41', 'test followup 1', 1);
+(1, 3, 3, '2018-07-30 06:45:41', 'test followup 1', 1),
+(2, 4, 4, '2018-07-31 05:33:10', 'test followup 2', 0),
+(3, 4, 4, '2018-07-31 05:33:55', 'test followup 2', 0);
 
 -- --------------------------------------------------------
 
@@ -132,7 +150,23 @@ CREATE TABLE `question` (
 --
 
 INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `ques_title`, `score`) VALUES
-(1, 1, '2018-07-30 06:28:25', 'edited question 1', 'title 1', 1);
+(1, 1, '2018-07-30 06:28:25', 'edited question 1', 'title 1', 1),
+(2, 2, '2018-07-31 05:14:23', 'test question 2', 'title 2', 0),
+(3, 2, '2018-07-31 05:26:32', 'test question 2', 'title 2', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `upvote`
+--
+
+CREATE TABLE `upvote` (
+  `up_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `ques_id` int(11) NOT NULL,
+  `answer_id` int(11) NOT NULL,
+  `followup_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -144,6 +178,12 @@ INSERT INTO `question` (`ques_id`, `user_id`, `post_date`, `message`, `ques_titl
 ALTER TABLE `answer`
   ADD PRIMARY KEY (`answer_id`),
   ADD KEY `ques_id` (`ques_id`);
+
+--
+-- Indexes for table `downvote`
+--
+ALTER TABLE `downvote`
+  ADD PRIMARY KEY (`down_id`);
 
 --
 -- Indexes for table `followup`
@@ -165,6 +205,12 @@ ALTER TABLE `question`
   ADD PRIMARY KEY (`ques_id`);
 
 --
+-- Indexes for table `upvote`
+--
+ALTER TABLE `upvote`
+  ADD PRIMARY KEY (`up_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -173,6 +219,12 @@ ALTER TABLE `question`
 --
 ALTER TABLE `answer`
   MODIFY `answer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `downvote`
+--
+ALTER TABLE `downvote`
+  MODIFY `down_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `followup`
@@ -191,6 +243,12 @@ ALTER TABLE `login`
 --
 ALTER TABLE `question`
   MODIFY `ques_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `upvote`
+--
+ALTER TABLE `upvote`
+  MODIFY `up_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

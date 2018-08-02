@@ -1,5 +1,5 @@
 <?php
- session_start();
+ //session_start();
     //if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $list_answer = '';
         $ques_id = $_POST['ques_id'];
@@ -32,23 +32,12 @@
                 array('ques_id' => $ques_id)
             );
 
-             //$list_answer = callpostAPI($url, $postdata);
-             $context = stream_context_create(array(
-                 'http' => array(
-                     'method' => 'POST',
-                     'timeout' => 60,
-                     'header'  => 'Content-type: application/x-www-form-urlencoded',
-                     'content' => $postdata
-                 )
-               ));
-
-               //GET the response inside $resp
-               $list_answer = file_get_contents($url, FALSE, $context);
+             $list_answer = callpostAPI($url, $postdata);
              //  echo $resp;
-             var_dump($list_answer) ;
+             var_dump($list_answer);
 
 }
-/*
+
 function callpostAPI($url1, $postdata1){
   $context = stream_context_create(array(
       'http' => array(
@@ -61,8 +50,18 @@ function callpostAPI($url1, $postdata1){
 
     //GET the response inside $resp
     $resp = file_get_contents($url1, FALSE, $context);
+    $resp = get_include_contents('../answerAPIs/list_answerAPI.php');
   //  echo $resp;
     return $resp;
 }
-*/
+
+function get_include_contents($filename) {
+    if (is_file($filename)) {
+        ob_start();
+        include $filename;
+        return ob_get_clean();
+    }
+    return false;
+}
+
 ?>
