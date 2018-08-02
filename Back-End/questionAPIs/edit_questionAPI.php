@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
   session_start();
   //if(isset($_POST['editquestion'])) {
     $ques_id = $message = $ques_title = '';

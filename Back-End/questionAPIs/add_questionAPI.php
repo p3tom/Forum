@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
   session_start();
   //if(isset($_POST['questionpost'])){
       //$ques_id = $_POST['ques_id'];

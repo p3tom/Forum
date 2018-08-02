@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
   session_start();
   $firstname = $lastname = $email = $pwd = $cpwd = ''; #initialize variables
   $inputArray = [$firstname, $lastname, $email, $pwd, $cpwd];
