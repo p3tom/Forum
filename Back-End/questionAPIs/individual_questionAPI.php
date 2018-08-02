@@ -24,28 +24,45 @@
                 }
                 echo json_encode($json_array);
             }
+            //Add the URL
+            $url = '../answerAPIs/list_answerAPI.php';
 
-            //$list_answer = file_get_contents('../answerAPIs/list_answerAPI.php');
-            //$list_answer = json_decode($list_answer);
-          }
+            //Add the input
+            $postdata = http_build_query(
+                array('ques_id' => $ques_id)
+            );
+
+             //$list_answer = callpostAPI($url, $postdata);
+             $context = stream_context_create(array(
+                 'http' => array(
+                     'method' => 'POST',
+                     'timeout' => 60,
+                     'header'  => 'Content-type: application/x-www-form-urlencoded',
+                     'content' => $postdata
+                 )
+               ));
+
+               //GET the response inside $resp
+               $list_answer = file_get_contents($url, FALSE, $context);
+             //  echo $resp;
+             var_dump($list_answer) ;
+
+}
 /*
-function CallAPI($method, $url, $data = false) {
-  $curl = curl_init();
-  switch ($method) {
-    case "POST":
-      curl_setopt($curl, CURLOPT_POST, 1);
-        if ($data){
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-        break;
-    default:
-    if ($data){
-        $url = sprintf("%s?%s", $url, http_build_query($data));
-      }
-    }
-    $result = curl_exec($curl);
-   if(!$result){die("Connection Failure");}
-   curl_close($curl);
-   return $result;
- }
- */ 
+function callpostAPI($url1, $postdata1){
+  $context = stream_context_create(array(
+      'http' => array(
+          'method' => 'POST',
+          'timeout' => 60,
+          'header'  => 'Content-type: application/x-www-form-urlencoded',
+          'content' => $postdata1
+      )
+    ));
+
+    //GET the response inside $resp
+    $resp = file_get_contents($url1, FALSE, $context);
+  //  echo $resp;
+    return $resp;
+}
+*/
+?>
