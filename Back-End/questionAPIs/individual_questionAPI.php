@@ -34,7 +34,7 @@
 
              $list_answer = callpostAPI($url, $postdata);
              //  echo $resp;
-             var_dump($list_answer);
+             echo $list_answer;
 
 }
 
@@ -49,7 +49,7 @@ function callpostAPI($url1, $postdata1){
     ));
 
     //GET the response inside $resp
-    $resp = file_get_contents($url1, FALSE, $context);
+    //$resp = file_get_contents($url1, FALSE, $context);
     $resp = get_include_contents('../answerAPIs/list_answerAPI.php');
   //  echo $resp;
     return $resp;
