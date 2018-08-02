@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
- session_start();
+// session_start();
     //if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ques_id = $_POST['ques_id'];
         if (empty($ques_id)) {

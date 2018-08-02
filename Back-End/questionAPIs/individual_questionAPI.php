@@ -2,8 +2,9 @@
 header("Access-Control-Allow-Origin: *");
  //session_start();
     //if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $list_answer = '';
+        $list_answer = $list_followup = '';
         $ques_id = $_POST['ques_id'];
+        $answer_id = $_POST['answer_id'];
         if (empty($ques_id)) {
           echo "Question ID is required. <br/>";
         }
@@ -25,27 +26,43 @@ header("Access-Control-Allow-Origin: *");
                 }
                 echo json_encode($json_array);
             }
+
             //Add the URL
-            $url = '../answerAPIs/list_answerAPI.php';
+            $url1 = '../answerAPIs/list_answerAPI.php';
 
             //Add the input
-            $postdata = http_build_query(
+            $postdata1 = http_build_query(
                 array('ques_id' => $ques_id)
             );
 
-             $list_answer = callpostAPI($url, $postdata);
+             $list_answer = callpostAPI($url1, $postdata1);
              //  echo $resp;
              echo $list_answer;
+             
+/* call to individual_answerAPI not working
+             //Add the URL
+             $url2 = '../answerAPIs/individual_answerAPI.php';
+
+             //Add the input
+             $postdata2 = http_build_query(
+                 array('answer_id' => $answer_id)
+             );
+
+              $list_followup = callpostAPI($url2, $postdata2);
+              //  echo $resp;
+              echo $list_followup;
+
+*/
 
 }
 
-function callpostAPI($url1, $postdata1){
+function callpostAPI($url, $postdata){
   $context = stream_context_create(array(
       'http' => array(
           'method' => 'POST',
           'timeout' => 60,
           'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata1
+          'content' => $postdata
       )
     ));
 
