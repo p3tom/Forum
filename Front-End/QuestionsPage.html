@@ -14,20 +14,20 @@
 		<h2> All questions </h2>
 
 		<fieldset id="newQuestion">
-
+			
 			<legend>Can't find what you're looking for? Ask a question! </legend>
 			<div id="inner">
-			<input id="title" type="text" placeholder="Title" required /> <br/>
-			<textarea id="q" placeholder="Your question..."> </textarea> <br/>
-			<button id="post" name="questionpost"> Post </button>
-			<button id="cancel" name="questioncancel"> Cancel </button>
+			<input id="title" type="text" placeholder="Title" required /><br/>
+			<textarea id="q" placeholder="Your question..."></textarea><br/>
+			<button id="post"> Post </button>
+			<button id="cancel"> Cancel </button>
 		</div>
 		</fieldset>
 
 		<div id="top">
 			<input type="search" placeholder="Search questions" />
 
-			<label for="sortby">Sort questions by:</label>
+			<label for="sortby">Sort questions by:</label> 
 			<select name="sortby" id="sortby">
 				<option value="date"> Newest </option>
 				<option value="best"> Best </option>
@@ -39,7 +39,7 @@
 		</div>
 
 		<script src="http://code.jquery.com/jquery.js"> </script>
-		<script>
+		<script> 
 			$( function(){
 
 
@@ -50,40 +50,79 @@
 					$('#title').val("");
 				}
 
-				$('#post').click(addNew);
 
-				function addNew () {
-					var title = $('#title').val();
+
+				$('#post').click(function(){
+					var thetitle = $('#title').val();
+					var username = "user"; 
+					var thedate = new Date();
+					var d = thedate.toLocaleDateString();
+					var t = thedate.toLocaleTimeString();
+					var string = d + " " + t;
+					
+					return addNew(thetitle, username, string, 0);
+				});
+
+				function addNew(title, user, date, score) {
+
+					//var title = $('#title').val();
 
 					//Will need to be retrived from the database
-					var score = 0;
+					//var score = 0;
 
-					var date = new Date();
+					//var date = new Date();
 
 					//Will depend on the current logged-in account
-					var username = "user";
+					//var username = "user";
 
 					link = $("<a href=''>").html(title);
 					titleDiv = $("<div class='qTitle'>").html(link);
 					infoDiv = $("<div class='info'>");
 					scoreDiv = $("<div class= 'score'>").html("Good question? " + score);
+					
+					//dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
+					dateDiv = $("<div class= 'date'>").html("Posted by " + user + " on " + date);
 
-					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
 					$(infoDiv).append(scoreDiv).append(dateDiv);
 					$(titleDiv).append(infoDiv);
 
-					var text = $('#sortby option:selected').text();
-					if (text === "Newest"){
+					//var text = $('#sortby option:selected').text();
+					//if (text === "Newest"){
 						$('#questions').prepend(titleDiv);
-					}
-					else{
-						$('#questions').append(titleDiv);
-					}
+					//}
+					//else{
+					//	$('#questions').append(titleDiv);
+					//}
 
 					$('#q').val("");
 					$('#title').val("");
 
 				}
+
+				$.ajax({
+					url: 'list_questionAPI.php',
+					type: 'GET',
+					async: 'false',
+					success: function(data){
+
+						console.log("yes");
+
+						var result = JSON.parse(data);
+
+						for (var i = 0; i < result.length; i++){
+							
+							var title = result[i].ques_title; 
+							var score = result[i].score; 
+							var time = result[i].post_date;
+							var user = result[i].user_id;
+
+							addNew(title, user, time, score);
+
+
+						}
+					}
+				});
+
 			});
 		</script>
 
