@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
     //if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $list_answer = $list_followup = '';
         $ques_id = $_POST['ques_id'];
-        $answer_id = $_POST['answer_id'];
+        //$answer_id = $_POST['answer_id'];
         if (empty($ques_id)) {
           echo "Question ID is required. <br/>";
         }
@@ -37,8 +37,9 @@ header("Access-Control-Allow-Origin: *");
 
              $list_answer = callpostAPI($url1, $postdata1);
              //  echo $resp;
+             //$list_answer = json_encode($list_answer);
              echo $list_answer;
-             
+
 /* call to individual_answerAPI not working
              //Add the URL
              $url2 = '../answerAPIs/individual_answerAPI.php';
@@ -55,7 +56,6 @@ header("Access-Control-Allow-Origin: *");
 */
 
 }
-
 function callpostAPI($url, $postdata){
   $context = stream_context_create(array(
       'http' => array(
