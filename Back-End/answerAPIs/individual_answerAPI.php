@@ -26,32 +26,32 @@ header("Access-Control-Allow-Origin: *");
                 echo json_encode($json_array);
               }
               //Add the URL
-              $url = '../followupAPIs/list_followupAPI.php';
+              $url1 = '../followupAPIs/list_followupAPI.php';
 
               //Add the input
               $postdata = http_build_query(
                   array('answer_id' => $answer_id)
               );
 
-               $list_followup = callpostAPI($url, $postdata);
+               $list_followup = callpostAPI($url1, $postdata);
                //  echo $resp;
                echo $list_followup;
 
   }
-
-  function callpostAPI($url1, $postdata1){
+  if (!function_exists('callpostAPI')) {
+    function callpostAPI($url, $postdata){
     $context = stream_context_create(array(
         'http' => array(
             'method' => 'POST',
             'timeout' => 60,
             'header'  => 'Content-type: application/x-www-form-urlencoded',
-            'content' => $postdata1
+            'content' => $postdata
         )
       ));
 
       //GET the response inside $resp
       //$resp = file_get_contents($url1, FALSE, $context);
-      $resp = get_include_contents('../followupAPIs/list_followupAPI.php');
+      $resp = get_include_contents($url);
     //  echo $resp;
       return $resp;
   }
@@ -64,7 +64,7 @@ header("Access-Control-Allow-Origin: *");
       }
       return false;
   }
-
+}
 
   //}
 ?>

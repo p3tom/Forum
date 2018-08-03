@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
     //if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $list_answer = $list_followup = '';
         $ques_id = $_POST['ques_id'];
-        //$answer_id = $_POST['answer_id'];
+        $answer_id = $_POST['answer_id'];
         if (empty($ques_id)) {
           echo "Question ID is required. <br/>";
         }
@@ -26,7 +26,7 @@ header("Access-Control-Allow-Origin: *");
                 }
                 echo json_encode($json_array);
             }
-
+/*
             //Add the URL
             $url1 = '../answerAPIs/list_answerAPI.php';
 
@@ -39,8 +39,8 @@ header("Access-Control-Allow-Origin: *");
              //  echo $resp;
              //$list_answer = json_encode($list_answer);
              echo $list_answer;
-
-/* call to individual_answerAPI not working
+*/
+// call to individual_answerAPI not working
              //Add the URL
              $url2 = '../answerAPIs/individual_answerAPI.php';
 
@@ -53,7 +53,7 @@ header("Access-Control-Allow-Origin: *");
               //  echo $resp;
               echo $list_followup;
 
-*/
+
 
 }
 function callpostAPI($url, $postdata){
@@ -68,7 +68,7 @@ function callpostAPI($url, $postdata){
 
     //GET the response inside $resp
     //$resp = file_get_contents($url1, FALSE, $context);
-    $resp = get_include_contents('../answerAPIs/list_answerAPI.php');
+    $resp = get_include_contents($url);
   //  echo $resp;
     return $resp;
 }
