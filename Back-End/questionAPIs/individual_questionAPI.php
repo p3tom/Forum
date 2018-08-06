@@ -26,7 +26,7 @@ header("Access-Control-Allow-Origin: *");
                 }
                 echo json_encode($json_array);
             }
-/*
+
             //Add the URL
             $url1 = '../answerAPIs/list_answerAPI.php';
 
@@ -39,8 +39,7 @@ header("Access-Control-Allow-Origin: *");
              //  echo $resp;
              //$list_answer = json_encode($list_answer);
              echo $list_answer;
-*/
-// call to individual_answerAPI not working
+
              //Add the URL
              $url2 = '../answerAPIs/individual_answerAPI.php';
 
@@ -52,7 +51,6 @@ header("Access-Control-Allow-Origin: *");
               $list_followup = callpostAPI($url2, $postdata2);
               //  echo $resp;
               echo $list_followup;
-
 
 
 }

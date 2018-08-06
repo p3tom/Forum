@@ -38,7 +38,7 @@ header("Access-Control-Allow-Origin: *");
                echo $list_followup;
 
   }
-  if (!function_exists('callpostAPI')) {
+  if (!function_exists("callpostAPI")) {
     function callpostAPI($url, $postdata){
     $context = stream_context_create(array(
         'http' => array(
