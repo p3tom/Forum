@@ -13,71 +13,41 @@ header("Access-Control-Allow-Origin: *");
           if(!$connection){
               die("Connection failed:".mysqli_connect_error());
           }
-              $select_query = "SELECT * FROM question WHERE ques_id = '$ques_id'";
-              $result = mysqli_query($connection, $select_query);
-              if (mysqli_num_rows($result) == 0) {
+              $select_question = "SELECT * FROM question WHERE ques_id = '$ques_id'";
+              $result1 = mysqli_query($connection, $select_question);
+              if (mysqli_num_rows($result1) == 0) {
                 echo "No matches found";
                 //echo '<script> alert("No matches found"); location.href = "../Front-End/Question.html";</script>';
               }
               else {
-                $json_array = array();
-                while($row = mysqli_fetch_assoc($result)){
-                    $json_array[] = $row;
+                $json_array1 = array();
+                while($row1 = mysqli_fetch_assoc($result1)){
+                    $json_array1[] = $row1;
                 }
-                echo json_encode($json_array);
+                //echo json_encode(json_array1);
+                $fp = fopen('results.json', 'w');
+                fwrite($fp, json_encode($json_array1));
+                fclose($fp);
             }
-
-            //Add the URL
-            $url1 = '../answerAPIs/list_answerAPI.php';
-
-            //Add the input
-            $postdata1 = http_build_query(
-                array('ques_id' => $ques_id)
-            );
-
-             $list_answer = callpostAPI($url1, $postdata1);
-             //  echo $resp;
-             //$list_answer = json_encode($list_answer);
-             echo $list_answer;
-
-             //Add the URL
-             $url2 = '../answerAPIs/individual_answerAPI.php';
-
-             //Add the input
-             $postdata2 = http_build_query(
-                 array('answer_id' => $answer_id)
-             );
-
-              $list_followup = callpostAPI($url2, $postdata2);
-              //  echo $resp;
-              echo $list_followup;
-
-
-}
-function callpostAPI($url, $postdata){
-  $context = stream_context_create(array(
-      'http' => array(
-          'method' => 'POST',
-          'timeout' => 60,
-          'header'  => 'Content-type: application/x-www-form-urlencoded',
-          'content' => $postdata
-      )
-    ));
-
-    //GET the response inside $resp
-    //$resp = file_get_contents($url1, FALSE, $context);
-    $resp = get_include_contents($url);
-  //  echo $resp;
-    return $resp;
-}
-
-function get_include_contents($filename) {
-    if (is_file($filename)) {
-        ob_start();
-        include $filename;
-        return ob_get_clean();
-    }
-    return false;
-}
-
+            #Select answers corresponding to ques_id
+            $select_answers = "SELECT * FROM answer WHERE ques_id = '$ques_id'";
+            $result2 = mysqli_query($connection, $select_answers);
+            if (mysqli_num_rows($result2) == 0) {
+              echo "No matches found";
+              //echo '<script> alert("No matches found"); location.href = "../Front-End/Question.html";</script>';
+            }
+            else {
+              $json_array2 = array();
+              while($row2 = mysqli_fetch_assoc($result2)){ #save results as JSON array
+                  $json_array2[] = $row2;
+              }
+              $inp = file_get_contents('results.json'); #append this data to existing JSON
+              $tempArray = json_decode($inp);
+              array_push($tempArray, $json_array2);
+              $jsonData = json_encode($tempArray);
+              file_put_contents('results.json', $jsonData);
+              echo file_get_contents('results.json');
+              //echo json_encode($json_array2);
+          }
+        }
 ?>

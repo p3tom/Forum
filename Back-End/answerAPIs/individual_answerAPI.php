@@ -25,6 +25,7 @@ header("Access-Control-Allow-Origin: *");
                 }
                 echo json_encode($json_array);
               }
+
               //Add the URL
               $url1 = '../followupAPIs/list_followupAPI.php';
 
@@ -33,12 +34,16 @@ header("Access-Control-Allow-Origin: *");
                   array('answer_id' => $answer_id)
               );
 
-               $list_followup = callpostAPI($url1, $postdata);
-               //  echo $resp;
+               $list_followup = callpostAPI($url1, $postdata); #gets data from list_followupAPI.php
+              /* $tempArray = json_decode($json_array); #decodes json created earlier in the file
+               array_push($tempArray, $list_followup);
+               $jsonData = json_encode($tempArray);
+               echo $jsonData;*/
+               //file_put_contents('results.json', $jsonData);
                echo $list_followup;
 
   }
-  if (!function_exists("callpostAPI")) {
+  //if (!function_exists("callpostAPI")) {
     function callpostAPI($url, $postdata){
     $context = stream_context_create(array(
         'http' => array(
@@ -64,7 +69,7 @@ header("Access-Control-Allow-Origin: *");
       }
       return false;
   }
-}
+//}
 
   //}
 ?>
