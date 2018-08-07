@@ -37,7 +37,7 @@ header("Access-Control-Allow-Origin: *");
       }#closes if statement checking email format
       else{
         #check if email already exists
-        $connection = mysqli_connect("localhost", "root", "", "questiondb");
+        $connection = mysqli_connect("localhost", "root", "mysql", "questiondb");
         $select_query = "SELECT * from login where email = '$email'";
         $query = mysqli_query($connection, $select_query);
         if (mysqli_num_rows($query) != 0) { #checks to make sure email not already registered

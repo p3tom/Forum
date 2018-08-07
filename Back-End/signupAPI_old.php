@@ -20,7 +20,7 @@
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid email format";
       }
-      $connection = mysqli_connect("localhost", "root", "", "questiondb");
+      $connection = mysqli_connect("localhost", "root", "mysql", "questiondb");
       $select_query = "SELECT * from login where email = '$email'";
       $query = mysqli_query($connection, $select_query);
       if (mysqli_num_rows($query) != 0) { #checks to make sure email not already registered
@@ -44,7 +44,7 @@
     }
     else {
       $pwd = $hashed_password;
-      $connection = mysqli_connect("localhost", "root", "", "questiondb"); #adding user info to database
+      $connection = mysqli_connect("localhost", "root", "mysql", "questiondb"); #adding user info to database
       $insert_query = "INSERT INTO login SET first_name = '$firstname', last_name = '$lastname', email = '$email', password = '$pwd'";
       $query = mysqli_query($connection, $insert_query);
       echo "Sign up successful";

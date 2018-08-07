@@ -8,7 +8,7 @@ header("Access-Control-Allow-Origin: *");
      echo "Answer ID is required. <br/>";
    }
    else{
-            $connection = mysqli_connect('localhost', 'root', '', 'questiondb');
+            $connection = mysqli_connect('localhost', 'root', 'mysql', 'questiondb');
             if(!$connection){
                 die("Connection failed:".mysqli_connect_error());
             }

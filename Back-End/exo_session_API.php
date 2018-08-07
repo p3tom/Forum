@@ -7,7 +7,7 @@ $exercise_id=$_POST['exercise_id'];
 $course_id=$_SESSION['course'];
 $user_id=$_SESSION['user'];
 
-
+$history_exo=$_SESSION['history_exo'];
 
 
 
@@ -42,10 +42,11 @@ $context = stream_context_create(array(
 ));
 	
 	//GET the response inside $resp
-	$resp = @file_get_contents($url, FALSE, $context);
+	$resp = file_get_contents($url, FALSE, $context);
 	
 	echo $resp;
 
+	
 
 
 
