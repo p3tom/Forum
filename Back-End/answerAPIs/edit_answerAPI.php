@@ -28,7 +28,7 @@ header("Access-Control-Allow-Origin: *");
     //  echo '<script> alert(implode($blank_fields)); location.href = "../Front-End/Question.html";</script>';
     }
     if ($is_filled === true ) {
-      $connection = mysqli_connect("localhost", "root", "", "questiondb");
+      $connection = mysqli_connect("localhost", "root", "mysql", "questiondb");
       if(!$connection){
           die("Connection failed:".mysqli_connect_error());
       }
