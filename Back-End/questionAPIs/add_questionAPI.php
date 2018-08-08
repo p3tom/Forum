@@ -34,7 +34,7 @@ header("Access-Control-Allow-Origin: *");
       }
 
       if ($is_filled === true ) {
-        $connection = mysqli_connect("localhost", "root", "mysql", "questiondb"); #to connect database
+        $connection = mysqli_connect("localhost", "root", "", "questiondb"); #to connect database
         if(!$connection){
             die("Connection failed:".mysqli_connect_error());
         }

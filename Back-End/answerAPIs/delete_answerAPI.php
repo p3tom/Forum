@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 session_start();
 
   //  if(isset($_POST['deleteanswer'])){
-        $connection = mysqli_connect('localhost', 'root', 'mysql', 'questiondb');
+        $connection = mysqli_connect('localhost', 'root', '', 'questiondb');
             if(!$connection){
                 die("Connection failed:".mysqli_connect_error());
             }

@@ -34,7 +34,7 @@ header("Access-Control-Allow-Origin: *");
         //var_dump(!filter_var($email, FILTER_VALIDATE_EMAIL));
       }#closes if statement checking email format
       else{
-          $connection = mysqli_connect("localhost", "root", "mysql", "questiondb"); #checks if email matches to database
+          $connection = mysqli_connect("localhost", "root", "", "questiondb"); #checks if email matches to database
           $select_query = "SELECT * from login where email = '$email'";
           $query = mysqli_query($connection, $select_query);
           if (mysqli_num_rows($query) == 0) {
