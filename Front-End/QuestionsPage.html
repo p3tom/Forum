@@ -59,8 +59,26 @@
 					var d = thedate.toLocaleDateString();
 					var t = thedate.toLocaleTimeString();
 					var string = d + " " + t;
+
+					$.ajax({
+						url: 'http://sci-code.com/Projects/Forum/Back-End/questionAPIs/add_questionAPI.php',
+						type: 'POST',
+						data: {
+							user_id: username,
+							message: $('#q').val(),
+							ques_title: $('#title').val(),
+							//score: 0,
+						},
+						async: 'false',
+						success: function(data){
+
+							addNew(thetitle, username, string, 0);
+							console.log(thetitle);
+							console.log(data);
+						}
+					});
 					
-					return addNew(thetitle, username, string, 0);
+					
 				});
 
 				function addNew(title, user, date, score) {
@@ -100,12 +118,10 @@
 				}
 
 				$.ajax({
-					url: 'list_questionAPI.php',
+					url: 'http://sci-code.com/Projects/Forum/Back-End/questionAPIs/list_questionAPI.php',
 					type: 'GET',
 					async: 'false',
 					success: function(data){
-
-						console.log("yes");
 
 						var result = JSON.parse(data);
 
