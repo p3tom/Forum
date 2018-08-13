@@ -1,7 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
- session_start();
-
+ //session_start();
     //if(isset($_POST['commentreply'])){
    // if ($_SERVER["REQUEST_METHOD"] == "POST"){
    $answer_id = $_POST['answer_id'];

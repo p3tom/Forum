@@ -48,8 +48,7 @@ header("Access-Control-Allow-Origin: *");
           // echo $json;
           $insert_query1 =  "SELECT * from question where post_date = '$post_date'";
           $result1 = mysqli_query($connection, $insert_query1);
-          if (mysqli_num_rows($result1) == 1) { #make sure question has been deleted
-            //echo "Question deleted <br/>";
+          if (mysqli_num_rows($result1) == 1) { #make sure question has been added
             echo '1';
             }
             else {

@@ -32,25 +32,24 @@ $chapter_list_obj=array();
 
 for($i=0;$i<count($course_list['course_list']);$i++)
 {
-	
+
 	if($course_list['course_list'][$i]['id_course']==$course_id)
 	{
 		$got_it=true;
 		$course_obj=$course_list['course_list'][$i];
 	}
 }
-		
-		
-		
-		
-		
+
+
+
+
+
 for($i=0;$i<count($chapter_list['chapter_list']);$i++)
 {
-	
 	if($chapter_list['chapter_list'][$i]['id_course']==$course_id)
 	{//echo $i;
 		$chapter_obj=$chapter_list['chapter_list'][$i];
-		
+
 		$got_chapter=true;
 		$exercise_obj=array();
 		for($a=0;$a<count($exercise_list['exercise_list']);$a++)
@@ -60,15 +59,15 @@ for($i=0;$i<count($chapter_list['chapter_list']);$i++)
 				array_push($exercise_obj,$exercise_list['exercise_list'][$a]);
 				//$exercise_obj=$exercise_list['exercise_list'][$a];
 				$chapter_obj["exercise_list"]=$exercise_obj;
-				//var_dump($chapter_obj["exercise_list"]);  
-					
+				//var_dump($chapter_obj["exercise_list"]);
+
 			}
-			
+
 		}
-	
+
 		array_push($chapter_list_obj,$chapter_obj);
-		
-	
+
+
 	}
 
 }
@@ -77,13 +76,13 @@ for($i=0;$i<count($chapter_list['chapter_list']);$i++)
 
 if($got_it){if($got_chapter){
 	$course_obj['chapter_list']=$chapter_list_obj;
-	
-	
-	
+
+
+
 }
 
 echo json_encode($course_obj);
-	
+
 }
 
 
