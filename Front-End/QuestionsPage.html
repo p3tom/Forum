@@ -61,7 +61,7 @@
 					var string = d + " " + t;
 
 					$.ajax({
-						url: 'http://sci-code.com/Projects/Forum/Back-End/questionAPIs/add_questionAPI.php',
+						url: '../Back-End/questionAPIs/add_questionAPI.php',
 						type: 'POST',
 						data: {
 							user_id: username,
@@ -73,7 +73,7 @@
 						success: function(data){
 
 							addNew(thetitle, username, string, 0);
-							console.log(thetitle);
+							
 							console.log(data);
 						}
 					});
