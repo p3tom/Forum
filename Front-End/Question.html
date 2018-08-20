@@ -66,11 +66,15 @@
 				$('#upvote').click(function(){
 					score = score + 1;
 					$('#score').text(score);
+
+					//alter question score
 				});
 
 				$('#downvote').click(function() {
 					score = score - 1;
 					$('#score').text(score);
+
+					//alter question score
 				});
 
 				$('#cancelnew').click(function(){
@@ -85,7 +89,9 @@
 				var child = 0;
 
 				$('#postnew').click(function(){
-					return addNew('reply', '#newreply', 0);
+					var text = $('#newreply').val();
+					addNew('reply', text, 0);
+					$('#newreply').val("");
 				});
 				
 				$('#edit').click(function(){
@@ -105,6 +111,8 @@
 
 						$(u).remove();
 						$(s).remove();
+
+						//need to alter question content in the database/API
 					});
 
 					$(s).click(function(){
@@ -117,10 +125,9 @@
 				});
 
 
-				function addNew (name, area, which) {
+				function addNew (name, content, which) {
 					
-					text = $(area).val();
-					insert = $("<p class='text'>").html(text);
+					insert = $("<p class='text'>").html(content);
 
 					answerDiv = $("<div>").html(insert);
 
@@ -161,8 +168,6 @@
 
 					$(answerDiv).append(infoDiv);
 
-					$(area).val("");
-
 					var date = new Date();
 					var username = "user";
 					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " at " + date.toLocaleTimeString());
@@ -177,6 +182,8 @@
 						$(answerDiv).after(followDiv);
 						$(answerDiv).after(follow);
 						$(del).addClass("r");
+
+						//ajax call to add_answerAPI.php
 					}
 
 
@@ -188,6 +195,8 @@
 						n = Number(which);
 						$('.followDiv.'+n).append(answerDiv);
 						$(del).addClass("f");
+
+						//ajax call to add_followupAPI.php
 
 					}
 					
@@ -202,6 +211,8 @@
 						num = Number($('.scorediv.'+index).text());
 						num = Number(num)+1;
 						$('.scorediv.'+index).text(Number(num));
+
+						//need to check whether it is an answer (r) or a followup (f) to determine which API to call
 					}
 
 					else if (event.target.classList.contains("down")===true){
@@ -232,7 +243,9 @@
 							
 							$(p).remove();
 							$(c).remove();
-							$(followbox).replaceWith(addNew('followup', '.followbox', i));
+							var folupcontent = $('.followbox').val();
+							$(followbox).replaceWith(addNew('followup', folupcontent, i));
+							$('.followbox').val();
 
 						});
 
@@ -257,6 +270,9 @@
 							$(postEdit).remove();
 							$(cancelEdit).remove();
 
+							// if ($(event.target).attr('class').split(' ')[2] == 'r'), call on edit_answerAPI.php. 
+							// else, call on edit_followupAPI.php
+
 						});
 
 						$(cancelEdit).click(function(){
@@ -276,6 +292,8 @@
 							if (!$.trim( $('.followDiv.'+index).html() ).length){
 								$('.reply.'+index).remove();
 								$('.startfollow.'+index).remove();
+
+								//need to remove the answer from the database
 							}
 
 							/*
@@ -285,10 +303,14 @@
 
 							else{
 								$('.text.'+index).html('[This answer was deleted]');
+
+								//Need to alter the answer content in the database 
 							}
 						}
 						else{
 							$('.followup.'+index).remove();
+
+							//need to remove the followup from the database
 						}
 
 					}

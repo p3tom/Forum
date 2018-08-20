@@ -61,9 +61,11 @@
 					var string = d + " " + t;
 
 					$.ajax({
-						url: '../Back-End/questionAPIs/add_questionAPI.php',
+						url: 'http://localhost/Forum-master/Back-End/questionAPIs/add_questionAPI.php',
 						type: 'POST',
 						data: {
+
+							//username should depend on the current logged-in account
 							user_id: username,
 							message: $('#q').val(),
 							ques_title: $('#title').val(),
@@ -74,7 +76,6 @@
 
 							addNew(thetitle, username, string, 0);
 							
-							//>> Here is the console line that is giving me the whole code 
 							console.log(data);
 						}
 					});
@@ -84,34 +85,17 @@
 
 				function addNew(title, user, date, score) {
 
-					//var title = $('#title').val();
-
-					//Will need to be retrived from the database
-					//var score = 0;
-
-					//var date = new Date();
-
-					//Will depend on the current logged-in account
-					//var username = "user";
-
 					link = $("<a href=''>").html(title);
 					titleDiv = $("<div class='qTitle'>").html(link);
 					infoDiv = $("<div class='info'>");
 					scoreDiv = $("<div class= 'score'>").html("Good question? " + score);
 					
-					//dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " " + date.toLocaleTimeString());
 					dateDiv = $("<div class= 'date'>").html("Posted by " + user + " on " + date);
 
 					$(infoDiv).append(scoreDiv).append(dateDiv);
 					$(titleDiv).append(infoDiv);
 
-					//var text = $('#sortby option:selected').text();
-					//if (text === "Newest"){
-						$('#questions').prepend(titleDiv);
-					//}
-					//else{
-					//	$('#questions').append(titleDiv);
-					//}
+					$('#questions').prepend(titleDiv);
 
 					$('#q').val("");
 					$('#title').val("");
@@ -119,10 +103,11 @@
 				}
 
 				$.ajax({
-					url: 'http://sci-code.com/Projects/Forum/Back-End/questionAPIs/list_questionAPI.php',
+					url: 'http://localhost/Forum-master/Back-End/questionAPIs/list_questionAPI.php',
 					type: 'GET',
 					async: 'false',
 					success: function(data){
+
 
 						var result = JSON.parse(data);
 
