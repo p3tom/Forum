@@ -16,6 +16,7 @@
 			<div id="content">
 				<h2 id="qtitle"> Question title </h2>
 				<p id="theQ"> Content of the question. </p>
+
 			</div>
 
 			<div id="buttons">
@@ -24,13 +25,16 @@
 					<image src="green_arrow_mini.png" />
 				</span>
 
+				<span id="likes">
+				</span>
+
 				<span id="downvote">
 					<image src="red_arrow_mini.png" />
 				</span>
 
-
-				<span id="score">
+				<span id="dislikes">
 				</span>
+
 			</div>
 
 				<div>
@@ -59,20 +63,22 @@
 		<script>
 			$(function(){
 
-				var score = 0;
+				var likes = 0;
+				var dislikes = 0;
 
-				$('#score').text(score);
+				$('#likes').text(likes);
+				$('#dislikes').text(dislikes);
 
 				$('#upvote').click(function(){
-					score = score + 1;
-					$('#score').text(score);
+					likes = likes + 1;
+					$('#likes').text(likes);
 
 					//alter question score
 				});
 
 				$('#downvote').click(function() {
-					score = score - 1;
-					$('#score').text(score);
+					dislikes = dislikes - 1;
+					$('#dislikes').text(dislikes);
 
 					//alter question score
 				});
@@ -112,6 +118,8 @@
 						$(u).remove();
 						$(s).remove();
 
+
+
 						//need to alter question content in the database/API
 					});
 
@@ -133,7 +141,9 @@
 
 					answerDiv.addClass(""+name);
 
-					scoreDiv = $("<span class='scorediv'>").text(0);
+					//scoreDiv = $("<span class='scorediv'>").text(0);
+					likeDiv = $("<span class='likediv'>").text(0);
+					dislikeDiv = $("<span class='dislikediv'>").text(0);
 
 					edit = $("<button class='edit'>").html("Edit");
 					del = $("<button class='delete'>").html("Delete");
@@ -149,7 +159,9 @@
 
 					$(up).addClass('up').addClass("" + child);
 					$(down).addClass('down').addClass("" + child);
-					$(scoreDiv).addClass("" + child);
+					//$(scoreDiv).addClass("" + child);
+					$(likeDiv).addClass("" + child);
+					$(dislikeDiv).addClass("" + child);
 					$(answerDiv).addClass("" + child);
 					$(follow).addClass("" + child);
 					$(edit).addClass(""+ child);
@@ -163,7 +175,7 @@
 
 					$(buttonsDiv).append(edit).append(del);
 					
-					$(updownscore).append(up).append(down).append(scoreDiv);
+					$(updownscore).append(up).append(likeDiv).append(down).append(dislikeDiv);
 					$(infoDiv).append(updownscore).append(buttonsDiv);
 
 					$(answerDiv).append(infoDiv);
@@ -182,6 +194,7 @@
 						$(answerDiv).after(followDiv);
 						$(answerDiv).after(follow);
 						$(del).addClass("r");
+
 
 						//ajax call to add_answerAPI.php
 					}
@@ -208,9 +221,9 @@
 					if (event.target.classList.contains("up") === true){
 						index = ($(event.target).attr('class').split(' ')[1]);
 
-						num = Number($('.scorediv.'+index).text());
+						num = Number($('.likediv.'+index).text());
 						num = Number(num)+1;
-						$('.scorediv.'+index).text(Number(num));
+						$('.likediv.'+index).text(Number(num));
 
 						//need to check whether it is an answer (r) or a followup (f) to determine which API to call
 					}
@@ -218,9 +231,9 @@
 					else if (event.target.classList.contains("down")===true){
 						newindex = ($(event.target).attr('class').split(' ')[1]);
 
-						num = Number($('.scorediv.'+newindex).text());
+						num = Number($('.dislikediv.'+newindex).text());
 						num = Number(num)-1;
-						$('.scorediv.'+newindex).text(Number(num));
+						$('.dislikediv.'+newindex).text(Number(num));
 					}
 
 					else if (event.target.classList.contains("startfollow")===true){
@@ -270,7 +283,27 @@
 							$(postEdit).remove();
 							$(cancelEdit).remove();
 
-							// if ($(event.target).attr('class').split(' ')[2] == 'r'), call on edit_answerAPI.php. 
+							if ($(event.target).attr('class').split(' ')[2] == 'r'){
+
+								/*$.ajax({
+									url: 'http://localhost/Forum-master/Back-End/answerAPIs/edit_answerAPI.php',
+									type: 'POST',
+									data: {
+										answer_id: Number($(event.target).attr('class').split(' ')[1]),
+										message: newtext,	
+									},
+									async: 'false',
+									success: function(data){
+										
+										console.log(data);
+									}
+								});
+								*/
+							}
+
+							else {
+
+							}
 							// else, call on edit_followupAPI.php
 
 						});
@@ -293,7 +326,18 @@
 								$('.reply.'+index).remove();
 								$('.startfollow.'+index).remove();
 
-								//need to remove the answer from the database
+								/*$.ajax({
+									url: 'http://localhost/Forum-master/Back-End/answerAPIs/delete_answerAPI.php',
+									type: 'POST',
+									data: {
+										answer_id: index,
+									}
+									async: false,
+									success: function(data){
+										console.log(data);
+									}
+								});
+								*/
 							}
 
 							/*
@@ -304,13 +348,26 @@
 							else{
 								$('.text.'+index).html('[This answer was deleted]');
 
-								//Need to alter the answer content in the database 
+								/*$.ajax({
+									url: 'http://localhost/Forum-master/Back-End/answerAPIs/edit_answerAPI.php',
+									type: 'POST',
+									data: {
+										answer_id: Number($(event.target).attr('class').split(' ')[1]),
+										message: '[This answer was deleted]',	
+									},
+									async: 'false',
+									success: function(data){
+							
+										console.log(data);
+									}
+								});
+								*/
 							}
 						}
 						else{
 							$('.followup.'+index).remove();
 
-							//need to remove the followup from the database
+							
 						}
 
 					}
