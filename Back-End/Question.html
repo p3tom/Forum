@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="questionstyle.css" />
+	<title> Question title </title> <!-- Should depend on the title of the question -->
+</head>
+
+<body>
+
+	<section id="main">
+
+		<div id=question>
+			<div id="content">
+				<h2 id="qtitle"> Question title </h2>
+				<p id="theQ"> Content of the question. </p>
+			</div>
+
+			<div id="buttons">
+				<div>
+				<span id="upvote">
+					<image src="green_arrow_mini.png" />
+				</span>
+
+				<span id="downvote">
+					<image src="red_arrow_mini.png" />
+				</span>
+
+
+				<span id="score">
+				</span>
+			</div>
+
+				<div>
+				<button id="replybutton"> Reply </button>
+				<button id="edit"> Edit </button>
+				<button id="delete"> Delete </button>
+			</div>
+
+			</div>
+
+		</div>
+
+
+		<div id="replyarea">
+			<div id=#new>
+				<textarea id="newreply" placeholder="Got an answer, suggestion or comment?"></textarea> <br/>
+				<div> <button id="postnew" name="commentreply"> Post </button>
+				<button id="cancelnew"> Cancel </button> </div>
+			</div>
+			<div id="replies">
+			</div>
+
+		</div>
+
+		<script src="http://code.jquery.com/jquery.js"> </script>
+		<script>
+			$(function(){
+
+				//This part here is for the question itself
+
+				var score = 0;
+
+				$('#score').text(score);
+
+				$('#upvote').click(function(){
+					score = score + 1;
+					$('#score').text(score);
+				});
+
+				$('#downvote').click(function() {
+					score = score - 1;
+					$('#score').text(score);
+				});
+
+				$('#cancelnew').click(function(){
+
+					$('#newreply').val("");
+				});
+
+				$('#replybutton').click(function(){
+					$('#replyarea').css('display', 'block');
+				});
+
+				//This variable is the counter that increments everytime a new answer or followup is posted. It is added as a class
+				//and essentially acts as the answer/followup 'id', which is useful for editing, deleting, changing the score...
+				var child = 0;
+
+				$('#postnew').click(function(){
+					return addNew('reply', '#newreply', 0);
+				});
+				
+				$('#edit').click(function(){
+					q = $('#theQ').html();
+					area = $("<textarea>").html(q);
+					$(area).attr('id', 'editq');
+					$('#theQ').replaceWith(area);
+					u = $("<button>").html("Update");
+					s = $("<button>").html("Cancel");
+					$(area).after(s);
+					$(area).after(u);
+
+					$(u).click(function(){
+						newQ = $(area).val();
+						question = $("<p id='theQ'>").html(newQ);
+						$(area).replaceWith(question);
+
+						$(u).remove();
+						$(s).remove();
+					});
+
+					$(s).click(function(){
+						oldQ = $("<p id='theQ'>").html(q);
+						$(area).replaceWith(oldQ);
+						$(u).remove();
+						$(s).remove();
+					});
+
+				});
+
+				//addNew function works for both answer and followup
+				function addNew (name, area, which) {
+					
+					text = $(area).val();
+					insert = $("<p class='text'>").html(text);
+
+					answerDiv = $("<div>").html(insert);
+
+					answerDiv.addClass(""+name);
+
+					scoreDiv = $("<span class='scorediv'>").text(0);
+
+					edit = $("<button class='edit'>").html("Edit");
+					del = $("<button class='delete'>").html("Delete");
+					follow = $("<button class='startfollow' name='commentreply'>").html("Post a reply");
+					buttonsDiv = $("<span class = 'ed'>");
+					followDiv = $("<div class='followDiv'>");
+					updownscore = $("<span class ='uds'>");
+
+					up = $("<image src='green_arrow_mini.png' alt='up' title='upvote'>");
+					down = $("<image src='red_arrow_mini.png' alt='down' title='downvote'>");
+
+					infoDiv = $("<div class='infodiv'>");
+
+					//The variable 'child' is added as a class to all the components within the answer/followup
+					//So EVERY element part of answer #4 will have a #4 in its class list for ease of reference 
+					$(up).addClass('up').addClass("" + child);
+					$(down).addClass('down').addClass("" + child);
+					$(scoreDiv).addClass("" + child);
+					$(answerDiv).addClass("" + child);
+					$(follow).addClass("" + child);
+					$(edit).addClass(""+ child);
+					$(del).addClass("" + child);
+					$(insert).addClass("" + child);
+					
+					
+					$(followDiv).addClass("" + child);
+
+					//child is incremented so that it is unique for every reply
+					child++;
+
+					$(buttonsDiv).append(edit).append(del);
+					
+					$(updownscore).append(up).append(down).append(scoreDiv);
+					$(infoDiv).append(updownscore).append(buttonsDiv);
+
+					$(answerDiv).append(infoDiv);
+
+					$(area).val("");
+
+					var date = new Date();
+					var username = "user";
+					dateDiv = $("<div class= 'date'>").html("Posted by " + username + " on " + date.toLocaleDateString() + " at " + date.toLocaleTimeString());
+					$(answerDiv).prepend(dateDiv);
+
+					if (name === 'reply'){
+						
+						$(del).attr('name', 'deleteanswer');
+						$(edit).attr('name', 'editanswer');
+
+						$('#replies').prepend(answerDiv);
+						$(answerDiv).after(followDiv);
+						$(answerDiv).after(follow);
+						$(del).addClass("r");
+					}
+
+
+					else if (name === 'followup'){
+
+						$(edit).attr('name', 'followupedit');
+						$(del).attr('name', 'followupdelete');
+
+						//The 'which' in the parameter refers to the id number of the answer to which we are posting a followup.
+						n = Number(which);
+						$('.followDiv.'+n).append(answerDiv);
+						$(del).addClass("f");
+
+					}
+					
+				}
+
+
+				$("body").click(function(event){
+
+					//Here now is where I take care of all the button functionalities for answers and followups. This is essentially the same
+					//as what was down earlier on for the question itself. 
+
+					if (event.target.classList.contains("up") === true){
+						index = ($(event.target).attr('class').split(' ')[1]);
+
+						num = Number($('.scorediv.'+index).text());
+						num = Number(num)+1;
+						$('.scorediv.'+index).text(Number(num));
+					}
+
+					else if (event.target.classList.contains("down")===true){
+						newindex = ($(event.target).attr('class').split(' ')[1]);
+
+						num = Number($('.scorediv.'+newindex).text());
+						num = Number(num)-1;
+						$('.scorediv.'+newindex).text(Number(num));
+					}
+
+					else if (event.target.classList.contains("startfollow")===true){
+						i = ($(event.target).attr('class').split(' ')[1]);
+						followbox = $("<textarea class='followbox' placeholder='Type out your follow-up!'>");
+						$('.startfollow.'+i).after(followbox);
+						p = $("<button>").html("Post");
+						c = $("<button>").html("Cancel");
+						$(followbox).after(p);
+						$(p).after(c);
+
+						$(c).click(function(){
+							$(followbox).remove();
+							$(p).remove();
+							$(c).remove();
+
+						});
+
+						$(p).click(function(){
+							
+							$(p).remove();
+							$(c).remove();
+							$(followbox).replaceWith(addNew('followup', '.followbox', i));
+
+						});
+
+					}
+
+					else if (event.target.classList.contains("edit")===true){
+						ind = ($(event.target).attr('class').split(' ')[1]);
+						text= $('.text.'+ind).html();
+						editText = $("<textarea class='edittext'>").html(text);
+						$('.text.'+ind).replaceWith(editText);
+						postEdit= $("<button>").html("Post");
+						cancelEdit= $("<button>").html("Cancel");
+						$(editText).after(cancelEdit);
+						$(editText).after(postEdit);
+
+						$(postEdit).click(function(){
+							newtext = $(editText).val();
+							insert = $("<p class='text'>").html(newtext);
+							$(insert).addClass("" + ind);
+							$(editText).replaceWith(insert);
+
+							$(postEdit).remove();
+							$(cancelEdit).remove();
+
+						});
+
+						$(cancelEdit).click(function(){
+							textp = $("<p class='text'>").html(text);
+							$(editText).replaceWith(textp);
+							$(textp).addClass("" + ind);
+							$(postEdit).remove();
+							$(cancelEdit).remove();
+						});
+					}
+
+					else if (event.target.classList.contains("delete")===true){
+						index = ($(event.target).attr('class').split(' ')[1]);
+						which = ($(event.target).attr('class').split(' ')[2]);
+						if (which === 'r'){
+						
+							if (!$.trim( $('.followDiv.'+index).html() ).length){
+								$('.reply.'+index).remove();
+								$('.startfollow.'+index).remove();
+							}
+
+							/*
+							I thought that there might be interesting followups to an answer, so it wouldn't
+							be fair for all followups to be deleted if an answer is deleted. 
+							*/
+
+							else{
+								$('.text.'+index).html('[This answer was deleted]');
+							}
+						}
+						else{
+							$('.followup.'+index).remove();
+						}
+
+					}
+
+				});
+
+			});
+
+		</script>
+
+	</section>
+
+</body>
+
+</html>
